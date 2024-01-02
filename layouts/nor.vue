@@ -1,0 +1,59 @@
+<template>
+  <div class="layout_css">
+    <AppHeader></AppHeader>
+    <transition>
+      <div class="app-main">
+        <nuxt />
+      </div>
+    </transition>
+    <AppFooter></AppFooter>
+  </div>
+</template>
+<script>
+import AppHeader from '../components/appHeader.vue'
+import AppMain from '../components/appMain.vue'
+import AppFooter from '../components/appFooter.vue'
+export default {
+  components: {
+    AppHeader, AppMain, AppFooter
+  },
+}
+</script>
+<style lang="scss" scoped>
+.layout_css {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  min-height: 100%;
+  padding-top: 60px;
+  width: 100%;
+  background-color: #f8fcff;
+  .app-main {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    @media screen and (max-width: 920px) {
+      min-width: 320px;
+    }
+  }
+
+  @media screen and (max-width: 920px) {
+    min-width: 320px;
+  }
+
+  .app-header {
+    height: 60px;
+  }
+
+  .app-main {
+    flex: 1;
+  }
+
+  .app-footer {
+    height: 94px;
+  }
+}
+</style>
