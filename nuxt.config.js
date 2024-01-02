@@ -7,13 +7,9 @@ const routerBase =
         }
       }
     : {}
+
 module.exports = {
-  router: {
-    ...routerBase
-  },
-  generate: {
-    routes: ['/article/1', '/article/2', '/article/3']
-  },
+ 
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
   // 'universal': 同构应用程序（服务器端呈现+客户端路由导航等）
   mode: 'universal',
@@ -219,5 +215,11 @@ module.exports = {
          ]
       ]
     }
-  }
+  },
+  router: {
+    base: '/blog/'
+  },
+  generate: {
+    routes: ['/article/1', '/article/2', '/article/3']
+  },
 }
