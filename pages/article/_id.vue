@@ -4,13 +4,17 @@
   </client-only>
 </template>
 <script>
+import { getBlogInfo } from "@/api/service"
 export default {
   layout: 'nor',
+  async asyncData({ params }) {
+    console.log("params",params.id)
+    const res = await getBlogInfo(params.id)
+    return { html: res.data.html }
+  },
   data() {
     return {
-      html: `<pre><code class="language-javascript">let a = 1
-const b = c</code></pre><pre><code class="language-javascript">let a = 1
-const b = c</code></pre><p>s's's</p>`,
+      html: ``,
     }
   },
   methods: {},

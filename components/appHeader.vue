@@ -2,7 +2,22 @@
   <header class="app-header">
     <nav class="nav_wrap clearfix" v-if="!isMobile">
       <h2 class="logo"><a href="/" title="hsueh">hsueh</a></h2>
-      <ul class="nav_box transition-box" v-show="isShow">
+      <div class="nav_box transition-box" v-show="isShow">
+        <el-form :inline="true">
+          <!-- <el-input type="search" placeholder="输入文章关键词" v-model="searchval">
+            <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
+          </el-input> -->
+          <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
+            :loading="loading" placeholder="请选择文章">
+            <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id">
+            </el-option>
+            <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
+          </el-select>
+          <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
+        </el-form>
+      </div>
+
+      <!-- <ul class="nav_box transition-box" v-show="isShow">
         <nuxt-link to="/" tag="li">杂散笔记</nuxt-link>
         <nuxt-link to="/series" tag="li">系列笔记</nuxt-link>
         <nuxt-link to="/argument" tag="li">个人论点</nuxt-link>
@@ -27,8 +42,7 @@
             </el-dropdown>
           </div>
         </li>
-      </ul>
-
+      </ul> -->
     </nav>
     <nav class="nav_wrap clearfix" v-else>
       <h1 class="logo">hsueh</h1>
@@ -37,19 +51,31 @@
       </div>
       <el-collapse-transition>
         <ul class="nav_box transition-box" v-show="isShow">
-          <nuxt-link to="/" tag="li">杂散笔记</nuxt-link>
+          <!-- <nuxt-link to="/" tag="li">杂散笔记</nuxt-link>
           <nuxt-link to="/series" tag="li">系列笔记</nuxt-link>
           <nuxt-link to="/argument" tag="li">个人论点</nuxt-link>
-          <nuxt-link to="/personal" tag="li">个人中心</nuxt-link>
+          <nuxt-link to="/personal" tag="li">个人中心</nuxt-link> -->
           <!-- <nuxt-link to="/about" tag="li">关于我</nuxt-link> -->
-          <nuxt-link to="/about" tag="li">关于我</nuxt-link>
+          <!-- <nuxt-link to="/about" tag="li">关于我</nuxt-link> -->
           <li>
-            <form autocomplete="off" @submit.prevent="searchHandleMob" style="width: 96%;">
+            <el-form :inline="true">
+              <!-- <el-input type="search" placeholder="输入文章关键词" v-model="searchval">
+            <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
+          </el-input> -->
+              <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
+                :loading="loading" placeholder="请选择文章">
+                <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id">
+                </el-option>
+                <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
+              </el-select>
+              <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
+            </el-form>
+            <!-- <form autocomplete="off" @submit.prevent="searchHandleMob" style="width: 96%;">
               <el-input type="search" placeholder="输入文章关键词" @focus="isFocus = true" @blur="isFocus = false"
                 v-model="searchval">
                 <el-button slot="append" @click="searchHandleMob" icon="el-icon-search"></el-button>
               </el-input>
-            </form>
+            </form> -->
           </li>
           <li>
             <div class="top-userinfo">
@@ -71,8 +97,7 @@
 </template>
 
 <script>
-import * as htmlparser from 'htmlparser2'
-
+// import * as htmlparser from 'htmlparser2'
 export default {
   name: 'navBar',
   data() {
@@ -80,11 +105,53 @@ export default {
       isShow: false,
       isMobile: false,
       searchval: '',
-      isFocus: false
+      isFocus: false,
+      loading: false,
+      options: [],
+      list: [
+        {
+          id: 1,
+          title: "你好"
+        },
+        {
+          id: 1,
+          title: "你好x"
+        },
+        {
+          id: 1,
+          title: "你好c"
+        },
+        {
+          id: 1,
+          title: "你好a"
+        },
+        {
+          id: 1,
+          title: "你好d"
+        },
+        {
+          id: 1,
+          title: "你好r"
+        },
+      ],
     }
   },
   watch: {},
   methods: {
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.options = this.$store.state.article.list.filter(item => {
+            return item.name
+              .indexOf(query) > -1;
+          });
+        }, 200);
+      } else {
+        this.options = [];
+      }
+    },
     //下拉菜单点击事件
     dropMenuHandler(command) {
       if (command === "logout") {
@@ -101,75 +168,79 @@ export default {
       event.stopPropagation()
       this.isShow = !this.isShow
     },
-    searchHandle(e) {
-      let _that = this
-      let result = ''
-      let parser = new htmlparser.Parser({
-        onopentag: function (name, attribs) {
-          if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
-            name === "link") {
-            // alert('小朋友不乖哟，不要乱输入！')
-          }
-        },
-        ontext: function (text) {
-          result += text
-        },
-        onclosetag: function (tagname) {
-          if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
-
-          }
-        }
-      }, { decodeEntities: true })
-      parser.write(this.searchval)
-      parser.end()
-      this.searchval = result
-
-      if (this.searchval.trim().length == 0) {
-        return false
-      }
-      this.$router.push({
-        name: 'search-keywords',
-        query: {
-          keywords: this.searchval
-        }
-      })
-      this.searchval = ''
+    searchHandle_(e) {
+      this.go(`/article/${this.searchval}`)
       return false
     },
-    searchHandleMob(e) {
-      let _that = this
-      let result = ''
-      let parser = new htmlparser.Parser({
-        onopentag: function (name, attribs) {
-          if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
-            name === "link") {
-          }
-        },
-        ontext: function (text) {
-          result += text
-        },
-        onclosetag: function (tagname) {
-          if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
+    // searchHandle(e) {
+    //   let _that = this
+    //   let result = ''
+    //   let parser = new htmlparser.Parser({
+    //     onopentag: function (name, attribs) {
+    //       if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
+    //         name === "link") {
+    //       }
+    //     },
+    //     ontext: function (text) {
+    //       result += text
+    //     },
+    //     onclosetag: function (tagname) {
+    //       if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
 
-          }
-        }
-      }, { decodeEntities: true })
-      parser.write(this.searchval)
-      parser.end()
-      this.searchval = result
-      if (this.searchval.trim().length == 0) {
-        return false
-      }
-      this.isShow = false
-      this.$router.push({
-        name: 'search-keywords',
-        query: {
-          keywords: this.searchval
-        }
-      })
-      this.searchval = ''
-      return false
-    }
+    //       }
+    //     }
+    //   }, { decodeEntities: true })
+    //   parser.write(this.searchval)
+    //   parser.end()
+    //   this.searchval = result
+
+    //   if (this.searchval.trim().length == 0) {
+    //     return false
+    //   }
+    //   this.$router.push({
+    //     name: 'search-keywords',
+    //     query: {
+    //       keywords: this.searchval
+    //     }
+    //   })
+    //   this.searchval = ''
+    //   return false
+    // },
+
+    // searchHandleMob(e) {
+    //   let _that = this
+    //   let result = ''
+    //   let parser = new htmlparser.Parser({
+    //     onopentag: function (name, attribs) {
+    //       if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
+    //         name === "link") {
+    //       }
+    //     },
+    //     ontext: function (text) {
+    //       result += text
+    //     },
+    //     onclosetag: function (tagname) {
+    //       if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
+
+    //       }
+    //     }
+    //   }, { decodeEntities: true })
+    //   parser.write(this.searchval)
+    //   parser.end()
+    //   this.searchval = result
+    //   if (this.searchval.trim().length == 0) {
+    //     return false
+    //   }
+    //   this.isShow = false
+    //   this.$router.push({
+    //     name: 'search-keywords',
+    //     query: {
+    //       keywords: this.searchval
+    //     }
+    //   })
+    //   this.searchval = ''
+    //   return false
+    // }
   },
   mounted() {
     let _this = this
@@ -262,7 +333,7 @@ export default {
     }
 
     .nav_box {
-      float: left;
+      float: right;
 
       li {
         float: left;

@@ -1,5 +1,6 @@
+const axios = require('axios')
 module.exports = {
- 
+
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
   // 'universal': 同构应用程序（服务器端呈现+客户端路由导航等）
   mode: 'universal',
@@ -172,7 +173,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    publicPath:"/static/",
+    publicPath: "/static/",
     transpile: [/^element-ui/],
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
     extractCSS: {
@@ -189,34 +190,43 @@ module.exports = {
     babel: {
       // compact: false,
       plugins: [
-         [
-           'prismjs',
-           {
-             languages: "all",
-             //配置显示行号插件
-             plugins: [
-               // 'toolbar',
-               'line-numbers',
-               'show-language',
-               'copy-to-clipboard'
-             ],
-             theme: 'okaidia', //主体名称
-             css: true
-           }
-         ]
+        [
+          'prismjs',
+          {
+            languages: "all",
+            //配置显示行号插件
+            plugins: [
+              // 'toolbar',
+              'line-numbers',
+              'show-language',
+              'copy-to-clipboard'
+            ],
+            theme: 'okaidia', //主体名称
+            css: true
+          }
+        ]
       ]
     }
   },
   router: {
-    ...process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? {
-        router: {
-          base: '/blog/'
-        }
-      }
-    : {}
+    base: '/blog/'
   },
   generate: {
-    routes: ['/article/1', '/article/2', '/article/3']
+    // routes: ['/article/1', '/article/2', '/article/3']
+    // routes() {
+    //   return getBlogList.then(res => {
+    //     return res.data.list.map(blog => {
+    //       return '/article/' + blog.id
+    //     })
+    //   })
+    // }
+    routes() {
+      return axios.get('http://localhost:3001/custom/faas/list/openblog').then(res => {
+        console.log(88888,res.data.data)
+        return res.data.data.list.map(blog => {
+          return '/article/' + blog.id
+        })
+      })
+    }
   },
 }

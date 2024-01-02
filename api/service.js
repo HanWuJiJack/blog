@@ -1,6 +1,19 @@
 import request from "./axios";
 
-
+// 获取博客
+export function getBlogList() {
+  return request({
+    url: '/custom/faas/list/openblog',
+    method: 'get',
+  })
+}
+// 获取博客
+export function getBlogInfo(id) {
+  return request({
+    url: '/custom/faas/get/openblog?id='+id,
+    method: 'get',
+  })
+}
 // 获取code
 export function getCode(query) {
   return request({

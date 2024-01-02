@@ -4,7 +4,7 @@
       <h1 v-else>应用发生错误异常</h1> -->
       <h1 class="code">{{ error.statusCode }}</h1>
       <p>{{ error.message }}</p>
-      <!-- <nuxt-link class="a" to="/">首 页</nuxt-link> -->
+      <nuxt-link class="a" to="/">首 页</nuxt-link>
     </div>
   </template>
   

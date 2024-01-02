@@ -1,10 +1,6 @@
 import {
-  getUserInfo
+  getBlogList
 } from '../api/service'
-
-const LIMIT = 9;
-const CURRENT_PAGE = 1;
-
 // 设定需要储存的数据及其默认值
 export const state = () => ({
   token: null,
@@ -16,10 +12,28 @@ export const actions = {
     const initAppData = [
       // store.dispatch('getConfig'),
       store.dispatch('getToken', context),
+      store.dispatch('getArticleList', context),
     ]
     return Promise.all(initAppData)
   },
-
+  // 获取网站文章
+  async getArticleList({
+    commit,
+    state
+  }, ctx) {
+    const {
+      app,
+    } = ctx
+    try {
+      const res = await getBlogList()
+      commit('article/SET_ART_SUCCESS', res.data.list)
+    } catch (error) {
+      ctx.error({
+        statusCode: 403,
+        message: error.message
+      })
+    }
+  },
   // 获取网站配置
   async getConfig({
     commit,
