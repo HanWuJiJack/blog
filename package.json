@@ -11,7 +11,7 @@
     "start": "nuxt start",
     "generate": "cross-env ENV_=pro nuxt generate",
     "generate:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate",
-    "deploy": "push-dir --dir=dist --branch=master --remote",
+    "deploy": "push-dir --dir=dist --branch=master --cleanup",
     "test": "jest"
   },
   "dependencies": {
