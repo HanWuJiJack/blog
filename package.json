@@ -7,9 +7,11 @@
     "dev:test": "cross-env ENV_=tets nuxt",
     "dev:pro": "cross-env ENV_=pro nuxt",
     "build": "cross-env ENV_=pro nuxt build",
+    "build:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
     "start": "nuxt start",
     "generate": "cross-env ENV_=pro nuxt generate",
     "generate:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate",
+    "deploy": "push-dir --dir=dist --branch=master --cleanup",
     "test": "jest"
   },
   "dependencies": {
@@ -46,6 +48,7 @@
     "jest": "^29.1.2",
     "jest-environment-jsdom": "^29.1.2",
     "nodemon": "^2.0.7",
+    "push-dir": "^0.4.1",
     "vue-jest": "^3.0.4",
     "vue-svgicon": "^3.2.4",
     "webpack": "^4.47.0"
