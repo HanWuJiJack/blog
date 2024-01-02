@@ -1,13 +1,3 @@
-
-const routerBase =
-  process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? {
-        router: {
-          base: '/blog/'
-        }
-      }
-    : {}
-
 module.exports = {
  
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
@@ -182,6 +172,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    publicPath:"/static/",
     transpile: [/^element-ui/],
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
     extractCSS: {
@@ -217,7 +208,13 @@ module.exports = {
     }
   },
   router: {
-    base: '/blog/'
+    ...process.env.DEPLOY_ENV === 'GH_PAGES'
+    ? {
+        router: {
+          base: '/blog/'
+        }
+      }
+    : {}
   },
   generate: {
     routes: ['/article/1', '/article/2', '/article/3']
