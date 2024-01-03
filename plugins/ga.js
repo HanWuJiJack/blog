@@ -6,8 +6,8 @@ if (process.client && process.env.ENV_ === 'pro') {
     var a = document.createElement('script');
     a.async = 1;
     a.src = "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
+    var s = document.getElementsByTagName("body")[0];
+    s.parentNode.insertBefore(a, s);
   })()
   /*
    ** 当前页的访问统计
