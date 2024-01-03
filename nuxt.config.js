@@ -86,11 +86,10 @@ module.exports = {
     }, ],
     script: [
       // Google Analytics Code
-      {
-        src: "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6",
-        async: true,
-      },
-      { src: "/js/analitics.js" },
+      // {
+      //   src: "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6",
+      //   async: true,
+      // },
     ]
   },
 
@@ -128,10 +127,10 @@ module.exports = {
       src: '@/plugins/baidu-seo-push.js',
       ssr: false
     },
-    // {
-    //   src: '@/plugins/ga.js',
-    //   ssr: false
-    // },
+    {
+      src: '@/plugins/ga.js',
+      ssr: false
+    },
     {
       src: "@/plugins/wangeditor",
       ssr: false
