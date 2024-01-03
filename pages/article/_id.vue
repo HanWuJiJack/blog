@@ -13,8 +13,9 @@ export default {
       return { html: payload.html, name: payload.name, }
     } else {
       // const res = await getBlogInfo(params.id)
-      const res = store.state.article.list.find((item)=>item.id == params.id)
-      return { html: res.data.html, name: res.data.name, }
+      const payload = store.state.article.list.find((item)=>item.id == params.id)
+      return { html: payload.html, name: payload.name, }
+      // return { html: res.data.html, name: res.data.name, }
     }
   },
   // fetch({ params, store }) {
