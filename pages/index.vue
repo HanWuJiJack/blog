@@ -31,7 +31,7 @@ export default {
   },
   async asyncData({ query }) {
     const res = await getBlogList({ pageNum: query.pageNum || 1, pageSize: query.pageSize || 10 })
-    console.log(res)
+    // console.log(res)
     return { res: res.data }
   },
   data() {

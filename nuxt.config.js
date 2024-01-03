@@ -253,7 +253,7 @@ module.exports = {
     // }
     routes() {
       return axios.get('http://localhost:3001/custom/faas/list/openblog').then(res => {
-        console.log(88888, res.data.data)
+        // console.log(88888, res.data.data)
         return res.data.data.list.map(blog => {
           return '/article/' + blog.id
         })
