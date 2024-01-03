@@ -1,8 +1,7 @@
 /*
 ** 只在生产模式的客户端中使用
 */
-if (process.env.ENV_ === 'pro') {
-  /*
+/*
   ** 百度seo-自动push脚本
   ** https://zz.bdstatic.com/linksubmit/push.js
   */
@@ -40,4 +39,3 @@ if (process.env.ENV_ === 'pro') {
       })();
     })
   })
-}

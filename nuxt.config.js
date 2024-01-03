@@ -124,10 +124,10 @@ module.exports = {
       src: '@/plugins/baidu-Analytics',
       ssr: false
     },
-    // {
-    //   src: '@/plugins/baidu-seo-push.js',
-    //   ssr: false
-    // },
+    {
+      src: '@/plugins/baidu-seo-push.js',
+      ssr: false
+    },
     // {
     //   src: '@/plugins/ga.js',
     //   ssr: false
