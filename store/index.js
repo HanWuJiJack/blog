@@ -3,7 +3,6 @@ import {
 } from '../api/service'
 // 设定需要储存的数据及其默认值
 export const state = () => ({
-  token: null,
   errorMessage: ""
 })
 
@@ -27,7 +26,7 @@ export const actions = {
         pageNum: 1,
         pageSize: 9999
       })
-      commit('article/SET_ART_SUCCESS', res.data.list)
+      commit('article/SET_All_SUCCESS', res.data.list)
     } catch (error) {
       ctx.error({
         statusCode: 403,
@@ -48,10 +47,4 @@ export const actions = {
     }
   },
 
-}
-//更新数据方法
-export const mutations = {
-  SET_ERROR_MESSAGE(state, token) {
-    state.errorMessage = token
-  }
 }

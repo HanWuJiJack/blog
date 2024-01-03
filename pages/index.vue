@@ -31,9 +31,13 @@ export default {
   },
   async asyncData({ query }) {
     const res = await getBlogList({ pageNum: query.pageNum || 1, pageSize: query.pageSize || 10 })
-    // console.log(res)
     return { res: res.data }
   },
+  // fetch({ store, query }) {
+  //   return getBlogList({ pageNum: query.pageNum || 1, pageSize: query.pageSize || 10 }).then(res => {
+  //     store.commit('article/SET_PAGE_LIST', res.data)
+  //   })
+  // },
   data() {
     return {
       res: {}
@@ -41,7 +45,7 @@ export default {
   },
   computed: {
     articleList() {
-      return this.$store.state.article.list
+      return this.$store.state.article.pageList
     },
   },
   methods: {

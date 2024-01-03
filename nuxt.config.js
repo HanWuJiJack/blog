@@ -97,15 +97,6 @@ module.exports = {
   loading: {
     color: '#5183ff'
   },
-  router: {
-    scrollBehavior: function (to, from, savedPosition) {
-      return {
-        x: 0,
-        y: 0
-      }
-    },
-    middleware: ['auth', 'test']
-  },
   /*
    ** Global CSS
    */
@@ -126,14 +117,14 @@ module.exports = {
     },
     '@/plugins/svg',
     '@/assets/icons/index',
-    {
-      src: '@/plugins/baidu-Analytics',
-      ssr: false
-    },
-    {
-      src: '@/plugins/baidu-seo-push.js',
-      ssr: false
-    },
+    // {
+    //   src: '@/plugins/baidu-Analytics',
+    //   ssr: false
+    // },
+    // {
+    //   src: '@/plugins/baidu-seo-push.js',
+    //   ssr: false
+    // },
     {
       src: '@/plugins/ga.js',
       ssr: false
@@ -192,13 +183,14 @@ module.exports = {
   },
   router: {
     // 在每页渲染前运行 middleware/user-agent.js 中间件的逻辑
-    middleware: ['auth', 'test'],
+    // middleware: ['auth', 'test'],
     scrollBehavior(to, from, savedPosition) {
       return {
         x: 0,
         y: 0
       }
-    }
+    },
+    base: '/blog/'
   },
   /*
    ** Build configuration
@@ -239,25 +231,26 @@ module.exports = {
       ]
     }
   },
-  router: {
-    base: '/blog/'
-  },
   generate: {
     // routes: ['/article/1', '/article/2', '/article/3']
-    // routes() {
-    //   return getBlogList.then(res => {
-    //     return res.data.list.map(blog => {
-    //       return '/article/' + blog.id
-    //     })
-    //   })
-    // }
     routes() {
-      return axios.get('http://localhost:3001/custom/faas/list/openblog').then(res => {
-        // console.log(88888, res.data.data)
+      return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
         return res.data.data.list.map(blog => {
           return '/article/' + blog.id
         })
       })
-    }
+    },
+    // routes() {
+    //   return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
+    //     // console.log(88888, res.data.data)
+    //     return res.data.data.list.map(blog => {
+    //       return {
+    //         route: '/article/' + blog.id,
+    //         payload: blog
+    //       }
+    //     })
+    //   })
+    // },
+    subFolders: false
   },
 }

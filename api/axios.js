@@ -10,7 +10,7 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: process.env.ENV_ !== "pro" ? 'http://192.168.10.135:3001' : 'http://api.brandhuang.com/frontend',
+  baseURL: 'http://192.168.10.135:3001',
   // 超时
   timeout: 5000
 })
@@ -78,7 +78,7 @@ service.interceptors.response.use(res => {
     if (message == "Network Error") {
       message = "后端接口连接异常";
     } else if (message.includes("timeout")) {
-      message = "系统接口请求超时";
+      message = "系统接口请求超时xxxx";
     } else if (message.includes("Request failed with status code")) {
       message = "系统接口" + message.substr(message.length - 3) + "异常";
     }
