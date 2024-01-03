@@ -57,6 +57,27 @@ module.exports = {
         name: 'renderer',
         content: 'webkit|ie-comp|ie-stand'
       },
+      {
+        hid: 'og:type',
+        name: 'og:type',
+        content: 'webpage'
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'og:url',
+        name: 'og:url',
+        content: 'https://hanwujijack.github.io/blog/'
+      }
+
     ],
     link: [{
       rel: 'icon',
@@ -137,11 +158,21 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt',
+    '@nuxtjs/sitemap',
     ['@nuxtjs/robots', {
       UserAgent: '*',
       Allow: '*',
     }],
   ],
+  sitemap: {
+    hostname: 'https://hanwujijack.github.io/blog/', // 你的具体的网址
+    gzip: true,
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date()
+    }
+  },
   styleResources: {
     scss: [
       // '~/assets/css/variables.scss',
@@ -222,7 +253,7 @@ module.exports = {
     // }
     routes() {
       return axios.get('http://localhost:3001/custom/faas/list/openblog').then(res => {
-        console.log(88888,res.data.data)
+        console.log(88888, res.data.data)
         return res.data.data.list.map(blog => {
           return '/article/' + blog.id
         })

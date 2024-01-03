@@ -25,7 +25,10 @@ export const actions = {
       app,
     } = ctx
     try {
-      const res = await getBlogList()
+      const res = await getBlogList({
+        pageNum: 1,
+        pageSize: 9999
+      })
       commit('article/SET_ART_SUCCESS', res.data.list)
     } catch (error) {
       ctx.error({

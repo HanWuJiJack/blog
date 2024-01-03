@@ -16,8 +16,7 @@ if (process.client && process.env.ENV_ === 'pro') {
   /*
    ** 当前页的访问统计
    */
-  ga('create', 'UA-137695268-1', 'auto')
-  console.log(888888)
+  ga('create', 'G-N8464N6KV6', 'auto')
 }
 
 export default ({

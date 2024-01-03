@@ -10,7 +10,7 @@
     "build:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
     "start": "nuxt start",
     "generate": "cross-env ENV_=pro nuxt generate",
-    "generate:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate",
+    "generate:gh": "cross-env ENV_=pro DEPLOY_ENV=GH_PAGES nuxt generate",
     "deploy": "push-dir --dir=dist --branch=master --allow-unclean",
     "test": "jest"
   },
@@ -19,6 +19,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/robots": "^3.0.0",
+    "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/style-resources": "^1.2.2",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^1.0.2",

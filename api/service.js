@@ -1,10 +1,11 @@
 import request from "./axios";
 
 // 获取博客
-export function getBlogList() {
+export function getBlogList(query) {
   return request({
     url: '/custom/faas/list/openblog',
     method: 'get',
+    params: query
   })
 }
 // 获取博客

@@ -6,15 +6,29 @@
 <script>
 import { getBlogInfo } from "@/api/service"
 export default {
+  watchQuery: true,
   layout: 'nor',
   async asyncData({ params }) {
-    console.log("params",params.id)
     const res = await getBlogInfo(params.id)
-    return { html: res.data.html }
+    return { html: res.data.html, name: res.data.name, }
   },
   data() {
     return {
       html: ``,
+    }
+  },
+  head() {
+    return {
+      title: this.name,
+      meta: [{
+        charset: 'utf-8'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: this.name
+      },
+      ],
     }
   },
   methods: {},

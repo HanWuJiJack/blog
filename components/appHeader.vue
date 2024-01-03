@@ -9,7 +9,7 @@
           </el-input> -->
           <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
             :loading="loading" placeholder="请选择文章">
-            <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id">
+            <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
             <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
           </el-select>
@@ -64,7 +64,7 @@
           </el-input> -->
               <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
                 :loading="loading" placeholder="请选择文章">
-                <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id">
+                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                 </el-option>
                 <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
               </el-select>
@@ -108,32 +108,6 @@ export default {
       isFocus: false,
       loading: false,
       options: [],
-      list: [
-        {
-          id: 1,
-          title: "你好"
-        },
-        {
-          id: 1,
-          title: "你好x"
-        },
-        {
-          id: 1,
-          title: "你好c"
-        },
-        {
-          id: 1,
-          title: "你好a"
-        },
-        {
-          id: 1,
-          title: "你好d"
-        },
-        {
-          id: 1,
-          title: "你好r"
-        },
-      ],
     }
   },
   watch: {},
