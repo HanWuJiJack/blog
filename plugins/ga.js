@@ -1,45 +1,30 @@
-if (process.client && process.env.ENV_ === 'pro') {
-  /*
-   ** Google 统计分析脚本
-   */
+/*
+ ** 只在生产模式的客户端中使用
+ */
+if (process.env.ENV_ === 'pro') {
+  var _hmt = _hmt || [];
   (function () {
-    var a = document.createElement('script');
-    a.async = 1;
-    a.src = "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6";
-    var s = document.getElementsByTagName("body")[0];
-    s.parentNode.insertBefore(a, s);
-  })()
-  /*
-   ** 当前页的访问统计
-   */
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', 'G-N8464N6KV6');
-}
+    var hm = document.createElement("script");
+    hm.src = "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6";
+    hm.id = "chrome_fx";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
 
-export default ({
-  app: {
-    router
-  },
-  store
-}) => {
   /*
-   ** 每次路由变更时进行pv统计
+   ** 应用挂载后
    */
-  router.afterEach((to, from) => {
-    if (process.client && process.env.ENV_ === 'pro') {
-      /*
-       ** 告诉 GA 增加一个 PV
-       */
-       window.dataLayer = window.dataLayer || [];
-       function gtag() {
-         dataLayer.push(arguments);
-       }
-       gtag('js', new Date());
-       gtag('config', 'G-N8464N6KV6');
-    }
+  window.onNuxtReady((app) => {
+    app.$nuxt.$on('routeChanged', (to, from) => {
+      var _hmt = _hmt || [];
+      (function () {
+        document.getElementById('chrome_fx') && document.getElementById('chrome_fx').remove()
+        var hm = document.createElement("script");
+        hm.src = "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6";
+        hm.id = "chrome_fx";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    })
   })
 }
