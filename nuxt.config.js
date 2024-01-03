@@ -120,10 +120,10 @@ module.exports = {
     },
     '@/plugins/svg',
     '@/assets/icons/index',
-    // {
-    //   src: '@/plugins/baidu-Analytics',
-    //   ssr: false
-    // },
+    {
+      src: '@/plugins/baidu-Analytics',
+      ssr: false
+    },
     // {
     //   src: '@/plugins/baidu-seo-push.js',
     //   ssr: false
