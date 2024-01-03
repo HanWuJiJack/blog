@@ -4,45 +4,14 @@
       <h2 class="logo"><a href="/" title="hsueh">hsueh</a></h2>
       <div class="nav_box transition-box" v-show="isShow">
         <el-form :inline="true">
-          <!-- <el-input type="search" placeholder="输入文章关键词" v-model="searchval">
-            <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
-          </el-input> -->
           <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
             :loading="loading" placeholder="请选择文章">
             <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
-            <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
           </el-select>
           <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
         </el-form>
       </div>
-
-      <!-- <ul class="nav_box transition-box" v-show="isShow">
-        <nuxt-link to="/" tag="li">杂散笔记</nuxt-link>
-        <nuxt-link to="/series" tag="li">系列笔记</nuxt-link>
-        <nuxt-link to="/argument" tag="li">个人论点</nuxt-link>
-        <nuxt-link to="/personal" tag="li">个人中心</nuxt-link>
-        <nuxt-link to="/about" tag="li">关于我</nuxt-link>
-        <li>
-          <form autocomplete="off" @submit.prevent="searchHandle">
-            <el-input type="search" placeholder="输入文章关键词" v-model="searchval">
-              <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
-            </el-input>
-          </form>
-        </li>
-        <li>
-          <div class="top-userinfo">
-            <el-dropdown @command="dropMenuHandler">
-              <span class="userinfo-name">{{ $store.state.user.info.userEmail }}</span>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item command="logout">退出</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-        </li>
-      </ul> -->
     </nav>
     <nav class="nav_wrap clearfix" v-else>
       <h1 class="logo">hsueh</h1>
@@ -50,46 +19,16 @@
         <i @click="showMenu($event)" class="el-icon-menu"></i>
       </div>
       <el-collapse-transition>
-        <ul class="nav_box transition-box" v-show="isShow">
-          <!-- <nuxt-link to="/" tag="li">杂散笔记</nuxt-link>
-          <nuxt-link to="/series" tag="li">系列笔记</nuxt-link>
-          <nuxt-link to="/argument" tag="li">个人论点</nuxt-link>
-          <nuxt-link to="/personal" tag="li">个人中心</nuxt-link> -->
-          <!-- <nuxt-link to="/about" tag="li">关于我</nuxt-link> -->
-          <!-- <nuxt-link to="/about" tag="li">关于我</nuxt-link> -->
-          <li>
-            <el-form :inline="true">
-              <!-- <el-input type="search" placeholder="输入文章关键词" v-model="searchval">
-            <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
-          </el-input> -->
-              <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
-                :loading="loading" placeholder="请选择文章">
-                <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
-                </el-option>
-                <!-- <el-select slot="append" @click="searchHandle" icon="el-icon-search"></el-select> -->
-              </el-select>
-              <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
-            </el-form>
-            <!-- <form autocomplete="off" @submit.prevent="searchHandleMob" style="width: 96%;">
-              <el-input type="search" placeholder="输入文章关键词" @focus="isFocus = true" @blur="isFocus = false"
-                v-model="searchval">
-                <el-button slot="append" @click="searchHandleMob" icon="el-icon-search"></el-button>
-              </el-input>
-            </form> -->
-          </li>
-          <li>
-            <div class="top-userinfo">
-              <el-dropdown @command="dropMenuHandler">
-                <span class="userinfo-name">{{ $store.state.user.info.userEmail }}</span>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item command="logout">退出</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
-          </li>
-        </ul>
+        <div class="nav_box transition-box" v-show="isShow">
+          <el-form :inline="true">
+            <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
+              :loading="loading" placeholder="请选择文章">
+              <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+            </el-select>
+            <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
+          </el-form>
+        </div>
       </el-collapse-transition>
 
     </nav>

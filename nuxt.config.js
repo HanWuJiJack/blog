@@ -233,24 +233,24 @@ module.exports = {
   },
   generate: {
     // routes: ['/article/1', '/article/2', '/article/3']
-    routes() {
-      return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
-        return res.data.data.list.map(blog => {
-          return '/article/' + blog.id
-        })
-      })
-    },
     // routes() {
     //   return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
-    //     // console.log(88888, res.data.data)
     //     return res.data.data.list.map(blog => {
-    //       return {
-    //         route: '/article/' + blog.id,
-    //         payload: blog
-    //       }
+    //       return '/article/' + blog.id
     //     })
     //   })
     // },
+    routes() {
+      return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
+        // console.log(88888, res.data.data)
+        return res.data.data.list.map(blog => {
+          return {
+            route: '/article/' + blog.id,
+            payload: blog
+          }
+        })
+      })
+    },
     subFolders: false
   },
 }

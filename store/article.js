@@ -1,7 +1,7 @@
 export const state = () => ({
   // 文章列表
   list: {},
-  pageList: {}
+  pageList: []
 })
 
 export const mutations = {
@@ -17,11 +17,14 @@ export const mutations = {
 
 export const actions = {
   // 获取网站文章
-  // async getArticleList({
-  //   commit,
-  //   state
-  // }, query) {
-  //   const res = await getBlogList(query)
-  //   commit('article/SET_PAGE_LIST', res.data)
-  // }
+  getPageArticleList({
+    commit,
+    state
+  }, query) {
+    const {
+      pageNum,
+      pageSize
+    } = query
+    commit('SET_PAGE_LIST', state.list.slice((pageNum - 1) * pageSize, pageNum * pageSize))
+  }
 }

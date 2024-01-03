@@ -8,9 +8,13 @@ import { getBlogInfo } from "@/api/service"
 export default {
   watchQuery: true,
   layout: 'nor',
-  async asyncData({ params }) {
-    const res = await getBlogInfo(params.id)
-    return { html: res.data.html, name: res.data.name, }
+  async asyncData({ params, error, payload }) {
+    if (payload) {
+      return { html: payload.html, name: payload.name, }
+    } else {
+      const res = await getBlogInfo(params.id)
+      return { html: res.data.html, name: res.data.name, }
+    }
   },
   data() {
     return {

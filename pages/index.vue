@@ -1,5 +1,5 @@
 <template>
-  <list :articleList="res"></list>
+  <list :articleList="articleList" :pageNum="pageNum" :pageSize="pageSize"></list>
 </template>
 
 <script>
@@ -30,14 +30,11 @@ export default {
     }
   },
   async asyncData({ query }) {
-    const res = await getBlogList({ pageNum: query.pageNum || 1, pageSize: query.pageSize || 10 })
-    return { res: res.data }
+    return { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 }
   },
-  // fetch({ store, query }) {
-  //   return getBlogList({ pageNum: query.pageNum || 1, pageSize: query.pageSize || 10 }).then(res => {
-  //     store.commit('article/SET_PAGE_LIST', res.data)
-  //   })
-  // },
+  fetch({ query, store }) {
+    store.dispatch('article/getPageArticleList', { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 })
+  },
   data() {
     return {
       res: {}
@@ -45,7 +42,10 @@ export default {
   },
   computed: {
     articleList() {
-      return this.$store.state.article.pageList
+      return {
+        list: this.$store.state.article.pageList,
+        total: this.$store.state.article.list.length,
+      }
     },
   },
   methods: {
