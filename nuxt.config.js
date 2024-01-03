@@ -84,11 +84,14 @@ module.exports = {
       type: 'image/x-icon',
       href: '/favicon.ico'
     }, ],
-    // script: [{
-    //   "data-ad-client": "ca-pub-3799223021946643",
-    //   src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-    //   async: true,
-    // }]
+    script: [
+      // Google Analytics Code
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6",
+        async: true,
+      },
+      { src: "/js/analitics.js" },
+    ]
   },
 
   /*
@@ -125,10 +128,10 @@ module.exports = {
     //   src: '@/plugins/baidu-seo-push.js',
     //   ssr: false
     // },
-    {
-      src: '@/plugins/ga.js',
-      ssr: false
-    },
+    // {
+    //   src: '@/plugins/ga.js',
+    //   ssr: false
+    // },
     {
       src: "@/plugins/wangeditor",
       ssr: false
