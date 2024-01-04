@@ -105,7 +105,6 @@ module.exports = {
   css: [
     '@/assets/css/style.css',
     'element-ui/lib/theme-chalk/index.css',
-    // '@/assets/css/monokai.css',
   ],
 
   /*
@@ -198,7 +197,6 @@ module.exports = {
   styleResources: {
     scss: [
       // '~/assets/css/variables.scss',
-      // './assets/css/preview.scss',
     ],
 
   },

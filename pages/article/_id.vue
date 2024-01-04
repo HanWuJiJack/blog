@@ -60,6 +60,7 @@ export default {
   background-color: #fff;
   box-sizing: border-box;
   max-width: 1200px;
+  width: 100%;
   table {
     border-collapse: collapse;
   }
