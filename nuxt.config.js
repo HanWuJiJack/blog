@@ -1,4 +1,5 @@
 const axios = require('axios')
+const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
   // 'universal': 同构应用程序（服务器端呈现+客户端路由导航等）
@@ -151,11 +152,40 @@ module.exports = {
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt',
     '@nuxtjs/sitemap',
+    'nuxt-precompress',
     ['@nuxtjs/robots', {
       UserAgent: '*',
       Allow: '*',
     }],
   ],
+  nuxtPrecompress: {
+    enabled: true, // Enable in production
+    report: false, // set true to turn one console messages during module init
+    test: /\.(js|css|html|txt|xml|svg)$/, // files to compress on build
+    middleware: {
+      enabled: true,
+      enabledStatic: true,
+      encodingsPriority: ['br', 'gzip']
+    },
+    gzip: {
+      enabled: true,
+      filename: '[path].gz[query]', // middleware will look for this filename
+      threshold: 10240,
+      minRatio: 0.8,
+      compressionOptions: {
+        level: 9
+      }
+    },
+    brotli: {
+      enabled: true,
+      filename: '[path].br[query]', // middleware will look for this filename
+      compressionOptions: {
+        level: 11
+      },
+      threshold: 10240,
+      minRatio: 0.8
+    }
+  },
   sitemap: {
     hostname: 'https://hanwujijack.github.io/blog/', // 你的具体的网址
     gzip: true,
@@ -197,6 +227,8 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    // 防止多次打包
+    vendor: ["axios"],
     publicPath: "/static/",
     transpile: [/^element-ui/],
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
@@ -228,9 +260,53 @@ module.exports = {
             theme: 'okaidia', //主体名称
             css: true
           }
+        ],
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
+          }
         ]
       ]
-    }
+    },
+    plugins: [
+      new CompressionPlugin({
+        test: /\.js$|\.html$|\.css/, // 匹配文件名
+        threshold: 10240, // 对超过10kb的数据进行压缩
+        deleteOriginalAssets: false // 是否删除原文件
+      })
+    ],
+    optimization: {
+      minimize: true,
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        name: true,
+        minSize: 10000,
+        maxSize: 244000,
+        cacheGroups: {
+          vendor: {
+            name: 'node_vendors',
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+            maxSize: 244000
+          },
+          styles: {
+            name: 'styles',
+            test: /\.(css|vue)$/,
+            chunks: 'all',
+            enforce: true
+          },
+          commons: {
+            test: /node_modules[\\/](vue|vue-loader|vue-router|vuex|vue-meta|core-js|@babel\/runtime|axios|webpack|setimmediate|timers-browserify|process|regenerator-runtime|cookie|js-cookie|is-buffer|dotprop|nuxt\.js)[\\/]/,
+            chunks: 'all',
+            priority: 10,
+            name: true
+          }
+        }
+      }
+    },
   },
   generate: {
     // routes: ['/article/1', '/article/2', '/article/3']

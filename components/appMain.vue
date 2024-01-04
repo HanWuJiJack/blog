@@ -2,7 +2,7 @@
   <main class="app-main">
     <nuxt class="main-left" />
     <side class="main-side"></side>
-    <el-backtop :bottom="100">
+    <el-backtop :top="100">
       <div style="{
           height: 100%;
           width: 100%;

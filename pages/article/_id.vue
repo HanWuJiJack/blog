@@ -53,11 +53,13 @@ export default {
 <style src="@wangeditor/editor/dist/css/style.css"></style>
 <style lang="scss">
 .editor-content-view {
-  flex: 1;
-  // border: 1px solid #ccc;
-  padding: 10px;
+  // flex: 1;
+  border: 1px solid #fff;
+  padding: 20px;
   border-radius: 10px;
   background-color: #fff;
+  box-sizing: border-box;
+  max-width: 1200px;
   table {
     border-collapse: collapse;
   }
