@@ -3,7 +3,6 @@ import {
 } from '../api/service'
 // 设定需要储存的数据及其默认值
 export const state = () => ({
-  errorMessage: ""
 })
 
 export const actions = {

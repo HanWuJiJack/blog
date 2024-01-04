@@ -1,6 +1,5 @@
 const axios = require('axios')
 module.exports = {
-
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
   // 'universal': 同构应用程序（服务器端呈现+客户端路由导航等）
   mode: 'universal',
@@ -82,7 +81,7 @@ module.exports = {
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
-      href: '/favicon.ico'
+      href: '/blog/favicon.ico'
     }, ],
     script: [
       // Google Analytics Code

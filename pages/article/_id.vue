@@ -13,17 +13,15 @@ export default {
       return { html: payload.html, name: payload.name, }
     } else {
       // const res = await getBlogInfo(params.id)
-      const payload = store.state.article.list.find((item)=>item.id == params.id)
+      const payload = store.state.article.list.find((item) => item.id == params.id)
       return { html: payload.html, name: payload.name, }
       // return { html: res.data.html, name: res.data.name, }
     }
   },
-  // fetch({ params, store }) {
-  //   store.dispatch('article/getPageArticleList', { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 })
-  // },
   data() {
     return {
       html: ``,
+      name: ""
     }
   },
   head() {
@@ -56,15 +54,13 @@ export default {
 <style lang="scss">
 .editor-content-view {
   flex: 1;
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   padding: 10px;
   border-radius: 10px;
   background-color: #fff;
-
   table {
     border-collapse: collapse;
   }
-
   td,
   th {
     border: 1px solid #ccc;

@@ -3,16 +3,11 @@
 </template>
 
 <script>
-import {
-  getBlogList
-} from '../api/service'
-import sidebar from '../components/sidebar'
 import list from '../components/articleList'
 export default {
   watchQuery: true,
   name: 'index',
   components: {
-    sidebar,
     list
   },
   head() {
@@ -55,7 +50,5 @@ export default {
   }
 }
 </script>
-
 <style lang="">
-
 </style>
