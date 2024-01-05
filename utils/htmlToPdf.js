@@ -82,7 +82,7 @@ class PdfLoader {
                 }
             });
             this.ele.style.height = '';
-            // window.location.reload();
+            window.location.reload();
             resolve();
         })
 
