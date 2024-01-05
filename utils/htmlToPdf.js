@@ -2,18 +2,26 @@
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 class PdfLoader {
-    constructor(ele, pdfFileName, splitClassName = "itemClass", breakClassName = "break_page") {
+    constructor(ele, pdfFileName, head = {
+            top: 40,
+            bottom: 10
+        },
+        foot = {
+            top: 20,
+            bottom: 20
+        }
+    ) {
+        this.head = head
+        this.foot = foot
         this.ele = ele;
         this.pdfFileName = pdfFileName;
-        this.splitClassName = splitClassName;
-        this.breakClassName = breakClassName;
         this.A4_WIDTH = 595;
         this.A4_HEIGHT = 842;
         this.pageHeight = 0
         this.pageNum = 1
+        this.init = 0
     };
     async getPDF(resolve) {
-        console.log(123);
         let ele = this.ele;
         let pdfFileName = this.pdfFileName
         let eleW = ele.offsetWidth // 获得该容器的宽
@@ -26,11 +34,12 @@ class PdfLoader {
         let win_out = window.innerWidth // 获得当前窗口的宽度（包含滚动条）
         if (win_out > win_in) {
             abs = (win_out - win_in) / 2 // 获得滚动条宽度的一半
-        }canvas.width = eleW * 2 // 将画布宽&&高放大两倍
+        }
+        canvas.width = eleW * 2 // 将画布宽&&高放大两倍
         canvas.height = eleH * 2
         let context = canvas.getContext("2d")
         context.scale(2, 2) // 增强图片清晰度
-        context.translate(- eleOffsetLeft - abs, - eleOffsetTop)
+        context.translate(-eleOffsetLeft - abs, -eleOffsetTop)
         html2canvas(ele, {
             useCORS: true // 允许canvas画布内可以跨域请求外部链接图片, 允许跨域请求。
         }).then(async canvas => {
@@ -63,13 +72,17 @@ class PdfLoader {
                         pdf.addPage()
                     }
                 }
-            } pdf.save(pdfFileName + ".pdf", {returnPromise: true}).then(() => { // 去除添加的空div 防止页面混乱
+            }
+            pdf.save(pdfFileName + ".pdf", {
+                returnPromise: true
+            }).then(() => { // 去除添加的空div 防止页面混乱
                 let doms = document.querySelectorAll('.emptyDiv')
                 for (let i = 0; i < doms.length; i++) {
                     doms[i].remove();
                 }
             });
             this.ele.style.height = '';
+            // window.location.reload();
             resolve();
         })
 
@@ -77,8 +90,8 @@ class PdfLoader {
     // 输出pdf
     async outPutPdfFn(pdfFileName) {
         return new Promise((resolve, reject) => { // 进行分割操作，当dom内容已超出a4的高度，则将该dom前插入一个空dom，把他挤下去，分割
-            let target = this.ele;
-            this.pageHeight = target.scrollWidth / this.A4_WIDTH * this.A4_HEIGHT;
+            let eleBounding = this.ele.getBoundingClientRect();
+            this.pageHeight = eleBounding.width / this.A4_WIDTH * this.A4_HEIGHT;
             this.ele.style.height = 'initial';
             pdfFileName ? this.pdfFileName = pdfFileName : null;
             this.pageNum = 1; // pdf页数
@@ -90,40 +103,101 @@ class PdfLoader {
     domEach(dom) {
         let childNodes = dom.childNodes
         childNodes.forEach((childDom, index) => {
-            if (this.hasClass(childDom, this.splitClassName)) {
-                let node = childDom;
+            if (this.init == 0) {
+                let divParent = childDom.parentNode; // 获取该div的父节点
+                let pageHeader = document.createElement("div")
+                pageHeader.className = "c-page-head"
+                pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
+                pageHeader.style.marginTop = this.head.top + "px"
+                pageHeader.style.lineHeight = 20 + "px"
+                pageHeader.style.fontSize = 14 + "px"
+                pageHeader.style.marginBottom = this.head.bottom + "px"
+                divParent.insertBefore(pageHeader, childDom);
+                this.init++
+                this.domEach(dom)
+                return
+            }
+            if (childDom.getBoundingClientRect) {
                 let eleBounding = this.ele.getBoundingClientRect();
-                let bound = node.getBoundingClientRect();
-                let offset2Ele = bound.top - eleBounding.top
-                let currentPage = Math.ceil((bound.bottom - eleBounding.top) / this.pageHeight); // 当前元素应该在哪一页
-                if (this.pageNum < currentPage) {
-                    this.pageNum ++
-                    let divParent = childDom.parentNode; // 获取该div的父节点
-                    let newNode = document.createElement('div');
-                    newNode.className = 'emptyDiv';
-                    newNode.style.background = 'white';
-                    newNode.style.height = (this.pageHeight * (this.pageNum - 1) - offset2Ele + 30) + 'px'; // +30为了在换下一页时有顶部的边距
-                    newNode.style.width = '100%';
-                    let next = childDom.nextSibling;
-                    // 获取div的下一个兄弟节点
-                    // 判断兄弟节点是否存在
-                    if (next) { // 存在则将新节点插入到div的下一个兄弟节点之前，即div之后
-                        divParent.insertBefore(newNode, node);
-                    } else { // 不存在则直接添加到最后,appendChild默认添加到divParent的最后
-                        divParent.appendChild(newNode);
+                const now = childDom.getBoundingClientRect();
+                if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
+                    if (now.height + 40 + this.head.top + this.head.bottom + this.foot.top + this.foot.bottom + -this.pageHeight > 0) {
+                        throw new Error("单行不允许超过A4纸高度！")
                     }
                 }
-            }
-            if (this.hasClass(childDom, this.breakClassName)) {
-                this.pageNum ++
-                console.log('break_page');
-                let eleBounding = this.ele.getBoundingClientRect();
-                let bound = childDom.getBoundingClientRect();
-                let offset2Ele = bound.top - eleBounding.top
-                // 剩余高度
-                let alreadyHeight = offset2Ele % this.pageHeight
-                let remainingHeight = this.pageHeight - alreadyHeight + 20
-                childDom.style.height = remainingHeight + 'px'
+                // console.log("=>now:", now)
+                const PageButtom = now.bottom - eleBounding.top
+                const PageTop = now.top - eleBounding.top
+                if (PageButtom - this.pageNum * parseInt(this.pageHeight) + 90 >= 0) {
+                    // console.log("=>", now, this.pageHeight, this.pageNum)
+                    const differTop = this.pageNum * parseInt(this.pageHeight) - PageTop // 计算获取当前节点到页底的距离
+                    const differButtom = this.pageNum * parseInt(this.pageHeight) - PageButtom // 计算获取当前节点到页底的距离
+                    let divParent = childDom.parentNode; // 获取该div的父节点
+                    if (differButtom >= 60) {
+                        let newNode = document.createElement('div');
+                        newNode.className = 'emptyDiv';
+                        newNode.style.background = 'white';
+                        newNode.style.height = differButtom - 60 + 'px';
+                        newNode.style.width = '100%';
+                        divParent.insertBefore(newNode, childDom.nextSibling);
+
+                        let pageFooter = document.createElement("div")
+                        pageFooter.className = "c-page-foot"
+                        pageFooter.innerHTML = "第" + this.pageNum + " 页"
+                        pageFooter.style.marginTop = this.foot.top + "px"
+                        pageFooter.style.fontSize = 14 + "px"
+                        pageFooter.style.textAlign = "center"
+                        pageFooter.style.lineHeight = 20 + "px"
+                        pageFooter.style.marginBottom = this.foot.bottom + "px"
+                        divParent.insertBefore(pageFooter, newNode.nextSibling);
+
+                        let pageHeader = document.createElement("div")
+                        pageHeader.className = "c-page-head"
+                        pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
+                        pageHeader.style.marginTop = this.head.top + "px"
+                        pageHeader.style.lineHeight = 20 + "px"
+                        pageHeader.style.fontSize = 14 + "px"
+                        pageHeader.style.marginBottom = this.head.bottom + "px"
+                        divParent.insertBefore(pageHeader, pageFooter.nextSibling);
+
+                        this.pageNum++
+                        this.domEach(dom)
+                        return
+                    } else {
+                        if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
+                            let newNode = document.createElement('div');
+                            newNode.className = 'emptyDiv';
+                            newNode.style.background = 'white';
+                            newNode.style.height = differTop - 60 + 'px';
+                            newNode.style.width = '100%';
+                            divParent.insertBefore(newNode, childDom);
+
+                            let pageFooter = document.createElement("div")
+                            pageFooter.className = "c-page-foot"
+                            pageFooter.innerHTML = "第" + this.pageNum + " 页"
+                            pageFooter.style.marginTop = this.foot.top + "px"
+                            pageFooter.style.fontSize = 14 + "px"
+                            pageFooter.style.textAlign = "center"
+                            pageFooter.style.lineHeight = 20 + "px"
+                            pageFooter.style.marginBottom = this.foot.bottom + "px"
+                            divParent.insertBefore(pageFooter, childDom);
+
+                            let pageHeader = document.createElement("div")
+                            pageHeader.className = "c-page-head"
+                            pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
+                            pageHeader.style.marginTop = this.head.top + "px"
+                            pageHeader.style.lineHeight = 20 + "px"
+                            pageHeader.style.fontSize = 14 + "px"
+                            pageHeader.style.marginBottom = this.head.bottom + "px"
+                            divParent.insertBefore(pageHeader, childDom);
+
+                            this.pageNum++
+                            this.domEach(dom)
+                            return
+                        }
+                    }
+
+                }
             }
             if (childDom.childNodes.length) {
                 this.domEach(childDom)
@@ -131,11 +205,20 @@ class PdfLoader {
         })
     }
     hasClass(element, cls) {
-        return(`` + element.className + ``).indexOf(`` + cls + ``) > -1;
+        if ((`` + element.className + ``).indexOf(`` + cls + ``) > -1) {
+            console.log("element.className", element.className)
+            return true
+        } else {
+            return false
+        }
+
     }
 }
 
 export default function (htmlTitle, ref) {
-    let pdf = new PdfLoader(ref, htmlTitle, "break_page break_page_2");
+    let pdf = new PdfLoader(ref, htmlTitle);
     pdf.outPutPdfFn(htmlTitle);
 }
+
+
+// class:line代表一行

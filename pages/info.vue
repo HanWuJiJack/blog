@@ -3,39 +3,19 @@
     <el-button @click="pdfDown_" class="exportButton">导出</el-button>
     <div class="Box" ref="box">
       <div class="userInfo">
-        <div>
-          <span class="title">
-            Hsueh
-          </span>
-        </div>
-        <div>
-          <span class="text">
-            求职意向：java go node 后端开发
-          </span>
-          <span class="text">
-            工作开始时间：2018年11月
-          </span>
-          <span class="text">
-            性别：男
-          </span>
-        </div>
-        <div>
-          <span class="text">
-            出生年月：1997年1月
-          </span>
-          <span class="text">
-            邮箱：79571635@qq.com
-          </span>
-          <!-- <span class="text">
-          联系电话：
-        </span> -->
-        </div>
+        <el-descriptions title="Hsueh" :column="2">
+          <el-descriptions-item label="求职意向">java go node</el-descriptions-item>
+          <el-descriptions-item label="工作时间">2018年11月 - {{`${new Date().getFullYear()}年${new Date().getMonth() + 1}月`}}</el-descriptions-item>
+          <el-descriptions-item label="性别">男</el-descriptions-item>
+          <el-descriptions-item label="出生年月">1997年1月</el-descriptions-item>
+          <el-descriptions-item label="邮箱">79571635@qq.com</el-descriptions-item>
+        </el-descriptions>
       </div>
-      <span class="box_title">
+      <div class="box_title">
         Web前端开发经历
-      </span>
+      </div>
       <div class="box_head">
-        <span class="text_ box_head_title">2021.06-至今</span>
+        <span class="text_ box_head_title">2021年6月 - {{`${new Date().getFullYear()}年${new Date().getMonth() + 1}月`}}</span>
         <span class="text_ box_head_title">上海海骄有限公司</span>
       </div>
       <div>
@@ -64,13 +44,11 @@
         <p class="text_">
           主要技术栈：
         </p>
-        <p class="text__" style="padding-left: 20px">
-          综合管理后台系统、远传后台管理系统、售后管理系统、H5：Vue+VueRouter+Vuex+Element+Axios+Eslint+Less
-          <br />
-          相控阵后台管理系统：React+ReactRouterDom+ReactRedux+ReduxThunk+Axios+Typescript+Eslint+Less
-          <br />
-          售后小程序：微信小程序原生开发
-        </p>
+        <div class="text__" style="padding-left: 20px">
+          <p>综合管理后台系统、远传后台管理系统、售后管理系统、H5：Vue+VueRouter+Vuex+Element+Axios+Eslint+Less</p>
+          <p>相控阵后台管理系统：React+ReactRouterDom+ReactRedux+ReduxThunk+Axios+Typescript+Eslint+Less</p>
+          <p>售后小程序：微信小程序原生开发</p>
+        </div>
       </div>
       <div class="box_head">
         <span class="text_ box_head_title">2020.10-2021.06</span>
@@ -145,33 +123,32 @@
       <span class="box_title">
         技能点
       </span>
-      <div class="break_page_2">
+      <div class="break_page">
         <p class="text_">
           工作常用：
         </p>
-        <p class="text__" style="padding-left: 20px">
-          vue2和vue3(Vue、VueRouter、Vuex、Element、Axios、Eslint、Less)<br />
-          React(React、ReactRouterDom、ReactRedux、ReduxThunk、ReduxSaga、Axios、Typescript、Eslint、Less)<br />
-          ReactNative<br />
-          微信小程序原生开发<br />
-          Nginx<br />
-          webPack<br />
-        </p>
+        <div class="text__" style="padding-left: 20px">
+          <p>vue2和vue3(Vue、VueRouter、Vuex、Element、Axios、Eslint、Less)</p>
+          <p> React(React、ReactRouterDom、ReactRedux、ReduxThunk、ReduxSaga、Axios、Typescript、Eslint、Less)</p>
+          <p>ReactNative</p>
+          <p>微信小程序原生开发</p>
+          <p>Nginx</p>
+          <p>webPack</p>
+        </div>
         <p class="text_">
           自学积累：
         </p>
-        <p class="text__" style="padding-left: 20px">
-          Electron<br />
-          Koa(node框架)+Sequelize(基于 promise 的 Node.js ORM)<br />
-          Adonis(node框架)<br />
-          Mysql（57:latin1/80：utf8mb4）<br />
-          Mongodb<br />
-          Redis<br />
-          Linux系统（centos 7）<br />
-          Java基础、spring、springMVC、mybatis+mybatisPuls、springBoot<br />
-          Rabbitmq<br />
-          <br />
-        </p>
+        <div class="text__" style="padding-left: 20px">
+          <p>Electron</p>
+          <p>Koa(node框架)+Sequelize(基于 promise 的 Node.js ORM)</p>
+          <p>Adonis(node框架)</p>
+          <p>Mysql（57:latin1/80：utf8mb4）</p>
+          <p>Mongodb</p>
+          <p>Redis</p>
+          <p>Linux系统（centos 7）</p>
+          <p>Java基础、spring、springMVC、mybatis+mybatisPuls、springBoot</p>
+          <p>Rabbitmq</p>
+        </div>
       </div>
       <span class="box_title">
         自我评价
@@ -185,12 +162,12 @@
       <span class="box_title">
         教育背景
       </span>
-      <div class="box_head">
+      <div class="box_head line">
         <span class="text_ box_head_title">2016.09-2019.07 </span>
         <span class="text_ box_head_title">安徽机电职业技术学院</span>
         <span class="text_ box_head_title">大专</span>
       </div>
-      <div class="box_head">
+      <div class="box_head line">
         <span class="text_ box_head_title">2022.03-2024.07 </span>
         <span class="text_ box_head_title">阜阳师范大学</span>
         <span class="text_ box_head_title">本科</span>
@@ -245,7 +222,7 @@ export default {
   },
   methods: {
     pdfDown_() {
-      htmlToPdf('xxx', this.$refs.box)
+      htmlToPdf('Hsueh', this.$refs.box)
     }
   },
   mounted() {
@@ -257,6 +234,7 @@ export default {
 .body {
   position: relative;
   margin: 0 auto;
+  // width: 595px;
   width: 900px;
   .exportButton {
     display: inline-block;
@@ -267,12 +245,14 @@ export default {
     box-sizing: border-box;
   }
 }
+
 .Box {
   box-sizing: border-box;
   font-family: myFirstFont, "Microsoft YaHei", "微软雅黑", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
   background-color: #fff;
-  padding: 30px 50px;
- 
+  padding: 20px;
+  // width: 595px;
+  width: 900px;
   .userInfo {
     border: 2px solid #4395ff;
     padding: 20px;
@@ -290,16 +270,22 @@ export default {
     font-family: myFirstFont, "Microsoft YaHei", "微软雅黑", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
     font-size: 16px;
     margin-right: 30px;
+    white-space: normal;
+    word-break: break-all;
   }
 
   .text_ {
     font-family: myFirstFont, "Microsoft YaHei", "微软雅黑", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
     font-size: 16px;
     margin: 15px 0;
+    white-space: normal;
+    word-break: break-all;
   }
 
   .text__ {
     font-family: myFirstFont, "Microsoft YaHei", "微软雅黑", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    white-space: normal;
+    word-break: break-all;
     font-size: 16px;
   }
 
@@ -310,7 +296,7 @@ export default {
     background-color: #4395ff;
     color: #fff;
     box-sizing: border-box;
-    padding:10px 20px;
+    padding: 10px 20px;
     margin: 20px 0;
     border-radius: 10px;
   }
@@ -318,7 +304,6 @@ export default {
   .box_head {
     display: flex;
     justify-content: space-between;
-
     .box_head_title {
       font-weight: 600;
     }
