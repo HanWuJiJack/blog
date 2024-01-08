@@ -21,8 +21,8 @@
       <el-collapse-transition>
         <div class="nav_box transition-box" v-show="isShow">
           <el-form :inline="true">
-            <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
-              :loading="loading" placeholder="请选择文章">
+            <el-select v-model="searchval" automatic-dropdown filterable remote reserve-keyword
+              :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
               <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
             </el-select>
@@ -74,86 +74,39 @@ export default {
         this.$router.push("/login")
       }
     },
+    modelClick($event) {
+      if ($event.target._prevClass == 'el-input__inner') {
+        this.$refs.selectRef.blur();
+      }
+    },
     stopDefault(event) {
       event.stopPropagation()
     },
     showMenu(event) {
-      event.stopPropagation()
       this.isShow = !this.isShow
+      event.stopPropagation()
+      this.$nextTick(() => {
+        // 在ios移动端使用elmentUI后无法弹出软键盘
+        Array.from(document.getElementsByClassName('el-select')).forEach((item) => {
+          item.children[0].children[0].removeAttribute('readOnly')
+          item.children[0].children[0].onblur = function () {
+            let _this = this
+            setTimeout(() => {
+              _this.removeAttribute('readOnly')
+            }, 200)
+          }
+        })
+      })
     },
     searchHandle_(e) {
-      this.go(`/article/${this.searchval}`)
-      return false
+      if (this.searchval) {
+        this.go(`/article/${this.searchval}`)
+        return false
+      } else {
+        this.msgInfo("请先选择~")
+      }
+
     },
-    // searchHandle(e) {
-    //   let _that = this
-    //   let result = ''
-    //   let parser = new htmlparser.Parser({
-    //     onopentag: function (name, attribs) {
-    //       if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
-    //         name === "link") {
-    //       }
-    //     },
-    //     ontext: function (text) {
-    //       result += text
-    //     },
-    //     onclosetag: function (tagname) {
-    //       if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
-
-    //       }
-    //     }
-    //   }, { decodeEntities: true })
-    //   parser.write(this.searchval)
-    //   parser.end()
-    //   this.searchval = result
-
-    //   if (this.searchval.trim().length == 0) {
-    //     return false
-    //   }
-    //   this.$router.push({
-    //     name: 'search-keywords',
-    //     query: {
-    //       keywords: this.searchval
-    //     }
-    //   })
-    //   this.searchval = ''
-    //   return false
-    // },
-
-    // searchHandleMob(e) {
-    //   let _that = this
-    //   let result = ''
-    //   let parser = new htmlparser.Parser({
-    //     onopentag: function (name, attribs) {
-    //       if (name === "script" || name === 'style' || name === "img" || name === 'frame' || name === 'iframe' ||
-    //         name === "link") {
-    //       }
-    //     },
-    //     ontext: function (text) {
-    //       result += text
-    //     },
-    //     onclosetag: function (tagname) {
-    //       if (tagname === "script" || tagname === "style" || tagname === "frame" || tagname === "iframe") {
-
-    //       }
-    //     }
-    //   }, { decodeEntities: true })
-    //   parser.write(this.searchval)
-    //   parser.end()
-    //   this.searchval = result
-    //   if (this.searchval.trim().length == 0) {
-    //     return false
-    //   }
-    //   this.isShow = false
-    //   this.$router.push({
-    //     name: 'search-keywords',
-    //     query: {
-    //       keywords: this.searchval
-    //     }
-    //   })
-    //   this.searchval = ''
-    //   return false
-    // }
   },
   mounted() {
     let _this = this

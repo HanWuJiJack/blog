@@ -2,8 +2,15 @@
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 class PdfLoader {
-    constructor(ele, pdfFileName, head = {
-            top: 40,
+    constructor(ele, pdfFileName,
+        pdf = {
+            top: 20,
+            bottom: 0,
+            left: 30,
+            right: 30
+        },
+        head = {
+            top: 20,
             bottom: 10
         },
         foot = {
@@ -11,6 +18,8 @@ class PdfLoader {
             bottom: 20
         }
     ) {
+        this.pdf = pdf
+        this.domEachEndSum = 1 //加尾页页码
         this.head = head
         this.foot = foot
         this.ele = ele;
@@ -19,7 +28,7 @@ class PdfLoader {
         this.A4_HEIGHT = 842;
         this.pageHeight = 0
         this.pageNum = 1
-        this.init = 0
+        this.init = 0 //加首页页眉
     };
     async getPDF(resolve) {
         let ele = this.ele;
@@ -76,14 +85,22 @@ class PdfLoader {
             pdf.save(pdfFileName + ".pdf", {
                 returnPromise: true
             }).then(() => { // 去除添加的空div 防止页面混乱
-                let doms = document.querySelectorAll('.emptyDiv')
-                for (let i = 0; i < doms.length; i++) {
-                    doms[i].remove();
+                let empty = document.querySelectorAll('.pdf-empty')
+                for (let i = 0; i < empty.length; i++) {
+                    empty[i].remove();
                 }
+                let foot = document.querySelectorAll('.pdf-foot')
+                for (let i = 0; i < foot.length; i++) {
+                    foot[i].remove();
+                }
+                let head = document.querySelectorAll('.pdf-head')
+                for (let i = 0; i < head.length; i++) {
+                    head[i].remove();
+                }
+                this.ele.style.height = '';
+                this.ele.style.padding = '';
+                resolve();
             });
-            this.ele.style.height = '';
-            window.location.reload();
-            resolve();
         })
 
     };
@@ -93,26 +110,27 @@ class PdfLoader {
             let eleBounding = this.ele.getBoundingClientRect();
             this.pageHeight = eleBounding.width / this.A4_WIDTH * this.A4_HEIGHT;
             this.ele.style.height = 'initial';
+            // padding: 20px 30px 40px 50px;     代表： 上  -   右  -  下  -   左
+            this.ele.style.padding = `${this.pdf.top}px ${this.pdf.right}px ${this.pdf.bottom}px ${this.pdf.left}px`;
             pdfFileName ? this.pdfFileName = pdfFileName : null;
             this.pageNum = 1; // pdf页数
             this.domEach(this.ele)
+            this.domEachEnd(this.ele)
             // 异步函数，导出成功后处理交互
             this.getPDF(resolve, reject);
         })
     };
+    // 添加 页眉 页码
     domEach(dom) {
         let childNodes = dom.childNodes
         childNodes.forEach((childDom, index) => {
+            let divParent = childDom.parentNode; // 获取该div的父节点
             if (this.init == 0) {
-                let divParent = childDom.parentNode; // 获取该div的父节点
-                let pageHeader = document.createElement("div")
-                pageHeader.className = "c-page-head"
-                pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
-                pageHeader.style.marginTop = this.head.top + "px"
-                pageHeader.style.lineHeight = 20 + "px"
-                pageHeader.style.fontSize = 14 + "px"
-                pageHeader.style.marginBottom = this.head.bottom + "px"
-                divParent.insertBefore(pageHeader, childDom);
+                if (this.head.top - this.pdf.top < 0) {
+                    throw new Error("head顶部距离请大于pdf顶部距离")
+                }
+                // this.addHeaderDiv(childDom, divParent, 20)
+                this.addHeaderDiv(childDom, divParent, this.head.top - this.pdf.top)
                 this.init++
                 this.domEach(dom)
                 return
@@ -128,69 +146,24 @@ class PdfLoader {
                 // console.log("=>now:", now)
                 const PageButtom = now.bottom - eleBounding.top
                 const PageTop = now.top - eleBounding.top
-                if (PageButtom - this.pageNum * parseInt(this.pageHeight) + 90 >= 0) {
+                if (PageButtom - this.pageNum * parseInt(this.pageHeight) + (this.foot.top + this.foot.bottom + 20 + 30) >= 0) {
                     // console.log("=>", now, this.pageHeight, this.pageNum)
                     const differTop = this.pageNum * parseInt(this.pageHeight) - PageTop // 计算获取当前节点到页底的距离
                     const differButtom = this.pageNum * parseInt(this.pageHeight) - PageButtom // 计算获取当前节点到页底的距离
-                    let divParent = childDom.parentNode; // 获取该div的父节点
-                    if (differButtom >= 60) {
-                        let newNode = document.createElement('div');
-                        newNode.className = 'emptyDiv';
-                        newNode.style.background = 'white';
-                        newNode.style.height = differButtom - 60 + 'px';
-                        newNode.style.width = '100%';
-                        divParent.insertBefore(newNode, childDom.nextSibling);
-
-                        let pageFooter = document.createElement("div")
-                        pageFooter.className = "c-page-foot"
-                        pageFooter.innerHTML = "第" + this.pageNum + " 页"
-                        pageFooter.style.marginTop = this.foot.top + "px"
-                        pageFooter.style.fontSize = 14 + "px"
-                        pageFooter.style.textAlign = "center"
-                        pageFooter.style.lineHeight = 20 + "px"
-                        pageFooter.style.marginBottom = this.foot.bottom + "px"
-                        divParent.insertBefore(pageFooter, newNode.nextSibling);
-
-                        let pageHeader = document.createElement("div")
-                        pageHeader.className = "c-page-head"
-                        pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
-                        pageHeader.style.marginTop = this.head.top + "px"
-                        pageHeader.style.lineHeight = 20 + "px"
-                        pageHeader.style.fontSize = 14 + "px"
-                        pageHeader.style.marginBottom = this.head.bottom + "px"
-                        divParent.insertBefore(pageHeader, pageFooter.nextSibling);
-
+                    if (differButtom >= (this.foot.top + this.foot.bottom + 20)) {
+                        let divParent = childDom.parentNode; // 获取该div的父节点
+                        const newNode = this.addEmptyDiv(childDom.nextSibling, differButtom - (this.foot.top + this.foot.bottom + 20), divParent)
+                        const pageFooter = this.addFootDiv(newNode.nextSibling, divParent)
+                        this.addHeaderDiv(pageFooter.nextSibling, divParent)
                         this.pageNum++
                         this.domEach(dom)
                         return
                     } else {
                         if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
-                            let newNode = document.createElement('div');
-                            newNode.className = 'emptyDiv';
-                            newNode.style.background = 'white';
-                            newNode.style.height = differTop - 60 + 'px';
-                            newNode.style.width = '100%';
-                            divParent.insertBefore(newNode, childDom);
-
-                            let pageFooter = document.createElement("div")
-                            pageFooter.className = "c-page-foot"
-                            pageFooter.innerHTML = "第" + this.pageNum + " 页"
-                            pageFooter.style.marginTop = this.foot.top + "px"
-                            pageFooter.style.fontSize = 14 + "px"
-                            pageFooter.style.textAlign = "center"
-                            pageFooter.style.lineHeight = 20 + "px"
-                            pageFooter.style.marginBottom = this.foot.bottom + "px"
-                            divParent.insertBefore(pageFooter, childDom);
-
-                            let pageHeader = document.createElement("div")
-                            pageHeader.className = "c-page-head"
-                            pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
-                            pageHeader.style.marginTop = this.head.top + "px"
-                            pageHeader.style.lineHeight = 20 + "px"
-                            pageHeader.style.fontSize = 14 + "px"
-                            pageHeader.style.marginBottom = this.head.bottom + "px"
-                            divParent.insertBefore(pageHeader, childDom);
-
+                            let divParent = childDom.parentNode; // 获取该div的父节点
+                            const newNode = this.addEmptyDiv(childDom, differTop - (this.foot.top + this.foot.bottom + 20), divParent)
+                            const pageFooter = this.addFootDiv(childDom, divParent)
+                            this.addHeaderDiv(childDom, divParent)
                             this.pageNum++
                             this.domEach(dom)
                             return
@@ -204,9 +177,79 @@ class PdfLoader {
             }
         })
     }
+    // 添加尾页
+    domEachEnd() {
+        let divParent = this.ele // 获取该div的父节点
+        let childNodes = this.ele.childNodes
+        const childDom = childNodes[childNodes.length - this.domEachEndSum]
+        if (childDom.getBoundingClientRect) {
+            if (this.foot.bottom - this.pdf.bottom < 0) {
+                throw new Error("foot底部距离请大于pdf底部距离")
+            }
+            const now = childDom.getBoundingClientRect();
+            let eleBounding = this.ele.getBoundingClientRect();
+            const PageButtom = now.bottom - eleBounding.top
+            const differButtom = this.pageNum * parseInt(this.pageHeight) - PageButtom // 计算获取当前节点到页底的距离
+            const newNode = this.addEmptyDiv(this.ele.nextSibling, differButtom - (this.foot.top + this.foot.bottom - this.pdf.bottom + 20), divParent)
+            this.addFootDiv(newNode.nextSibling, divParent, null, this.foot.bottom - this.pdf.bottom)
+        } else {
+            this.domEachEndSum++
+            this.domEachEnd()
+        }
+    }
+    addEmptyDiv(node, height, divParent) {
+        let newNode = document.createElement('div');
+        newNode.className = 'pdf-empty';
+        newNode.style.background = 'white';
+        newNode.style.height = height + 'px';
+        newNode.style.width = '100%';
+        divParent.insertBefore(newNode, node);
+        return newNode
+    }
+    addFootDiv(node, divParent, top, bottom) {
+        let paddingTop = top
+        if (paddingTop != 0 && !paddingTop) {
+            paddingTop = this.foot.top
+        }
+        let paddingBottom = bottom
+        if (paddingBottom != 0 && !paddingBottom) {
+            paddingBottom = this.foot.bottom
+        }
+        let pageFooter = document.createElement("div")
+        pageFooter.className = "pdf-foot"
+        pageFooter.innerHTML = "第" + this.pageNum + " 页"
+        pageFooter.style.paddingTop = paddingTop + "px"
+        pageFooter.style.fontSize = 14 + "px"
+        pageFooter.style.textAlign = "center"
+        pageFooter.style.lineHeight = 20 + "px"
+        pageFooter.style.paddingBottom = paddingBottom + "px"
+        divParent.insertBefore(pageFooter, node);
+        return pageFooter
+    }
+    addHeaderDiv(node, divParent, top, bottom) {
+        let paddingTop = top
+        if (paddingTop != 0 && !paddingTop) {
+            paddingTop = this.head.top
+        }
+        let paddingBottom = bottom
+        if (paddingBottom != 0 && !paddingBottom) {
+            paddingBottom = this.head.bottom
+        }
+        let pageHeader = document.createElement("div")
+        pageHeader.className = "pdf-head"
+        pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
+        pageHeader.style.paddingTop = paddingTop + "px"
+
+        pageHeader.style.lineHeight = 19 + "px"
+        pageHeader.style.borderBottom = "1px solid #ccc"
+        pageHeader.style.fontSize = 14 + "px"
+        pageHeader.style.paddingBottom = paddingBottom + "px"
+        divParent.insertBefore(pageHeader, node);
+        return pageHeader
+    }
     hasClass(element, cls) {
         if ((`` + element.className + ``).indexOf(`` + cls + ``) > -1) {
-            console.log("element.className", element.className)
+            // console.log("element.className", element.className)
             return true
         } else {
             return false

@@ -1,6 +1,6 @@
 export const state = () => ({
   // 文章列表
-  list: {},
+  list: [],
   pageList: []
 })
 

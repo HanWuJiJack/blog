@@ -1,11 +1,12 @@
 <template>
   <div class="body">
     <el-button @click="pdfDown_" class="exportButton">导出</el-button>
-    <div class="Box" ref="box">
+    <div class="pdf" ref="box">
       <div class="userInfo">
         <el-descriptions title="Hsueh" :column="2">
           <el-descriptions-item label="求职意向">java go node</el-descriptions-item>
-          <el-descriptions-item label="工作时间">2018年11月 - {{`${new Date().getFullYear()}年${new Date().getMonth() + 1}月`}}</el-descriptions-item>
+          <el-descriptions-item label="工作时间">2018年11月 - {{ `${new Date().getFullYear()}年${new Date().getMonth() +
+            1}月` }}</el-descriptions-item>
           <el-descriptions-item label="性别">男</el-descriptions-item>
           <el-descriptions-item label="出生年月">1997年1月</el-descriptions-item>
           <el-descriptions-item label="邮箱">79571635@qq.com</el-descriptions-item>
@@ -15,7 +16,8 @@
         Web前端开发经历
       </div>
       <div class="box_head">
-        <span class="text_ box_head_title">2021年6月 - {{`${new Date().getFullYear()}年${new Date().getMonth() + 1}月`}}</span>
+        <span class="text_ box_head_title">2021年6月 - {{ `${new Date().getFullYear()}年${new Date().getMonth() +
+          1}月` }}</span>
         <span class="text_ box_head_title">上海海骄有限公司</span>
       </div>
       <div>
@@ -191,14 +193,10 @@
 </template>
 
 <script>
-import list from '../components/articleList'
 import htmlToPdf from '../utils/htmlToPdf.js'
 export default {
-  name: 'index',
+  name: 'info',
   layout: 'nor',
-  components: {
-    list
-  },
   head() {
     return {
       title: '个人信息',
@@ -230,12 +228,28 @@ export default {
   }
 }
 </script>
+<style  lang="scss">
+.pdf {
+  .pdf-empty {
+    box-sizing: border-box;
+  }
+
+  .pdf-head {
+    box-sizing: border-box;
+  }
+
+  .pdf-foot {
+    box-sizing: border-box;
+  }
+}
+</style>
 <style scoped lang="scss">
 .body {
   position: relative;
   margin: 0 auto;
   // width: 595px;
   width: 900px;
+
   .exportButton {
     display: inline-block;
     position: absolute;
@@ -246,13 +260,14 @@ export default {
   }
 }
 
-.Box {
+.pdf {
   box-sizing: border-box;
   font-family: myFirstFont, "Microsoft YaHei", "微软雅黑", "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
   background-color: #fff;
   padding: 20px;
   // width: 595px;
   width: 900px;
+
   .userInfo {
     border: 2px solid #4395ff;
     padding: 20px;
@@ -304,11 +319,11 @@ export default {
   .box_head {
     display: flex;
     justify-content: space-between;
+
     .box_head_title {
       font-weight: 600;
     }
   }
 
   // #4395ff
-}
-</style>
+}</style>
