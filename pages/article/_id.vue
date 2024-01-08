@@ -61,9 +61,11 @@ export default {
   box-sizing: border-box;
   max-width: 1200px;
   width: 100%;
+
   table {
     border-collapse: collapse;
   }
+
   td,
   th {
     border: 1px solid #ccc;
@@ -83,5 +85,8 @@ export default {
   input[type="checkbox"] {
     margin-right: 5px;
   }
-}
-</style>
+
+  img {
+    width: 100%;
+  }
+}</style>
