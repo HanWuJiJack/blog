@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      publicPath: process.env.ENV_ == 1 ? '/' : '/blog',
+      publicPath: process.env.ENV_ == 1 ? '' : '/blog',
       res: {},
     }
   },
@@ -321,7 +321,8 @@ export default {
       }
       objcss3d.visible = !objcss3d.visible
 
-      let audio = new Audio(`${this.publicPath}/say.wav`);
+      let audio = new Audio();
+      audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
       audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
         audio.play();
       });
@@ -335,7 +336,7 @@ export default {
     outlinePass.visibleEdgeColor.set(0xffff00);
     outlinePass.edgeThickness = 4;
     outlinePass.edgeStrength = 6;
-    outlinePass.pulsePeriod = 2; 
+    outlinePass.pulsePeriod = 2;
     composer.addPass(outlinePass);
     renderer.domElement.addEventListener('click', function (event) {
       const objects = getSceneModelFaceNum(scene)
