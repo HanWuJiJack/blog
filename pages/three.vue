@@ -211,10 +211,10 @@ export default {
     // scene.add(pointLightHelper);
 
     const Textures = [
-      new THREE.TextureLoader().load("/end/1.png"),
-      new THREE.TextureLoader().load("/end/5.png"),
-      new THREE.TextureLoader().load("/end/8.png"),
-      new THREE.TextureLoader().load("/end/9.png")
+      new THREE.TextureLoader().load(`${publicPath}/1.png`),
+      new THREE.TextureLoader().load(`${publicPath}/5.png`),
+      new THREE.TextureLoader().load(`${publicPath}/8.png`),
+      new THREE.TextureLoader().load(`${publicPath}/9.png`)
     ]
     const pointsCubes = []
     for (let j = 0; j < 1; j++) {
@@ -302,11 +302,11 @@ export default {
     }
     const percentFn_ = percentFn()
 
-    material.map = new THREE.TextureLoader().load("/end/bg1.jpg", (texture) => {
+    material.map = new THREE.TextureLoader().load(`${publicPath}/bg1.jpg`, (texture) => {
       percentFn_.add()
       percentFn_.tu()
     })
-    materialEarth.map = new THREE.TextureLoader().load("/end/earth.jpeg", (texture) => {
+    materialEarth.map = new THREE.TextureLoader().load(`${publicPath}/earth.jpeg`, (texture) => {
       percentFn_.add()
       percentFn_.tu()
     })
