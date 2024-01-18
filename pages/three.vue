@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      publicPath: process.env.ENV_ == 1 ? '/end' : '/blog/end',
+      publicPath: process.env.ENV_ == 1 ? '/' : '/blog',
       res: {},
     }
   },
@@ -211,10 +211,10 @@ export default {
     // scene.add(pointLightHelper);
 
     const Textures = [
-      new THREE.TextureLoader().load(`${this.publicPath}/1.png`),
-      new THREE.TextureLoader().load(`${this.publicPath}/5.png`),
-      new THREE.TextureLoader().load(`${this.publicPath}/8.png`),
-      new THREE.TextureLoader().load(`${this.publicPath}/9.png`)
+      new THREE.TextureLoader().load(`${this.publicPath}/end/1.png`),
+      new THREE.TextureLoader().load(`${this.publicPath}/end/5.png`),
+      new THREE.TextureLoader().load(`${this.publicPath}/end/8.png`),
+      new THREE.TextureLoader().load(`${this.publicPath}/end/9.png`)
     ]
     const pointsCubes = []
     for (let j = 0; j < 1; j++) {
@@ -302,11 +302,11 @@ export default {
     }
     const percentFn_ = percentFn()
 
-    material.map = new THREE.TextureLoader().load(`${this.publicPath}/bg1.jpg`, (texture) => {
+    material.map = new THREE.TextureLoader().load(`${this.publicPath}/end/bg1.jpg`, (texture) => {
       percentFn_.add()
       percentFn_.tu()
     })
-    materialEarth.map = new THREE.TextureLoader().load(`${this.publicPath}/earth.jpeg`, (texture) => {
+    materialEarth.map = new THREE.TextureLoader().load(`${this.publicPath}/end/earth.jpeg`, (texture) => {
       percentFn_.add()
       percentFn_.tu()
     })
@@ -338,24 +338,13 @@ export default {
     render3d.domElement.style.pointerEvents = 'none';
     // const controls = new OrbitControls(camera, render3d.domElement);
 
-    // -------添加描边效果---------
+ 
     const composer = new EffectComposer(renderer);
-    // 创建一个渲染器通道，场景和相机作为参数
     const renderPass = new RenderPass(scene, camera);
-    // 给EffectComposer添加一个渲染器通道RenderPass。
-    // 设置renderPass通道
     composer.addPass(renderPass);
-
-    // 3. 设置glitchPass通道
-    // const glitchPass = new GlitchPass();
-    // composer.addPass(glitchPass);
-
-    // OutlinePass第一个参数v2的尺寸和canvas画布保持一致
     const v2 = new THREE.Vector2(window.innerWidth, window.innerHeight);
-    // const v2 = new THREE.Vector2(800, 600);
     const outlinePass = new OutlinePass(v2, scene, camera);
     outlinePass.selectedObjects = [];
-
     meshEarth.change = function () {
       let includes_ = -1
       for (let i = 0; i < outlinePass.selectedObjects.length; i++) {
@@ -370,7 +359,7 @@ export default {
       }
       objcss3d.visible = !objcss3d.visible
 
-      let audio = new Audio('/say.wav');
+      let audio = new Audio(`${this.publicPath}/say.wav`);
       audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
         audio.play();
       });
