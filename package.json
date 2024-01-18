@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env ENV_=dev nuxt",
+    "dev": "cross-env ENV_=dev PATH_=1 nuxt",
     "dev:test": "cross-env ENV_=tets nuxt",
     "dev:pro": "cross-env ENV_=pro nuxt",
     "build": "cross-env ENV_=pro nuxt build",
     "build:gh": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
     "start": "nuxt start",
     "generate": "cross-env ENV_=pro nuxt generate",
-    "generate:gh": "cross-env ENV_=pro DEPLOY_ENV=GH_PAGES nuxt generate",
+    "generate:gh": "cross-env ENV_=pro PATH_=2 DEPLOY_ENV=GH_PAGES nuxt generate",
     "deploy": "push-dir --dir=dist --branch=master --allow-unclean",
     "test": "jest"
   },

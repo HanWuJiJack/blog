@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      publicPath: '/end',
+      publicPath: process.env.ENV_ == 1 ? '/end' : '/blog/end',
       res: {},
     }
   },
@@ -90,48 +90,48 @@ export default {
     let initWidth = window.innerWidth
     let initHeight = window.innerHeight
 
-    window.onresize = debounce(function(){
-        width = window.innerWidth
-        height = window.innerHeight
-        // 更新运动星体xy尺寸
-        pointsCubes.forEach((pointsCube) => {
-          const x = THREE.MathUtils.randFloat(0, width).toFixed(2);
-          const y = THREE.MathUtils.randFloat(0, height).toFixed(2);
-          pointsCube.position.x = x
-          pointsCube.position.y = y
-        })
-        // 更新闪烁星体xy尺寸
-        pointsCubes_.forEach((pointsCube) => {
-          const x = THREE.MathUtils.randFloat(0, width).toFixed(2);
-          const y = THREE.MathUtils.randFloat(0, height).toFixed(2);
-          pointsCube.position.x = x
-          pointsCube.position.y = y
-        })
-        // 更新地球xy
-        meshEarth.position.set(width * 0.8, height * 0.8, deep - 100)
+    window.onresize = debounce(function () {
+      width = window.innerWidth
+      height = window.innerHeight
+      // 更新运动星体xy尺寸
+      pointsCubes.forEach((pointsCube) => {
+        const x = THREE.MathUtils.randFloat(0, width).toFixed(2);
+        const y = THREE.MathUtils.randFloat(0, height).toFixed(2);
+        pointsCube.position.x = x
+        pointsCube.position.y = y
+      })
+      // 更新闪烁星体xy尺寸
+      pointsCubes_.forEach((pointsCube) => {
+        const x = THREE.MathUtils.randFloat(0, width).toFixed(2);
+        const y = THREE.MathUtils.randFloat(0, height).toFixed(2);
+        pointsCube.position.x = x
+        pointsCube.position.y = y
+      })
+      // 更新地球xy
+      meshEarth.position.set(width * 0.8, height * 0.8, deep - 100)
 
-        // 更新光源xyz
-        pointLight.position.set(100, height - 100, deep - 300);
+      // 更新光源xyz
+      pointLight.position.set(100, height - 100, deep - 300);
 
-        // 更新空间盒子xyz
-        mesh.position.set(width / 2, height / 2, deep / 2)
-        // 更新空间盒子尺寸
-        mesh.scale.set(width / initWidth, height / initHeight, 1);
+      // 更新空间盒子xyz
+      mesh.position.set(width / 2, height / 2, deep / 2)
+      // 更新空间盒子尺寸
+      mesh.scale.set(width / initWidth, height / initHeight, 1);
 
 
-        // 更新相机
-        camera.fov = Math.tan(height / 2 / deep) / Math.PI * 180 * 1.9
-        // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
-        camera.aspect = width / height;
-        // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
-        // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
-        // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
-        camera.updateProjectionMatrix();
-        // 重置渲染器输出画布canvas尺寸
-        renderer.setSize(width, height);
-        render3d.setSize(width, height);
-        camera.lookAt(width / 2, height / 2, deep)
-      }, 1000)
+      // 更新相机
+      camera.fov = Math.tan(height / 2 / deep) / Math.PI * 180 * 1.9
+      // 全屏情况下：设置观察范围长宽比aspect为窗口宽高比
+      camera.aspect = width / height;
+      // 渲染器执行render方法的时候会读取相机对象的投影矩阵属性projectionMatrix
+      // 但是不会每渲染一帧，就通过相机的属性计算投影矩阵(节约计算资源)
+      // 如果相机的一些属性发生了变化，需要执行updateProjectionMatrix ()方法更新相机的投影矩阵
+      camera.updateProjectionMatrix();
+      // 重置渲染器输出画布canvas尺寸
+      renderer.setSize(width, height);
+      render3d.setSize(width, height);
+      camera.lookAt(width / 2, height / 2, deep)
+    }, 1000)
 
     // 创建一个场景
     const scene = new THREE.Scene();
