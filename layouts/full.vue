@@ -5,7 +5,7 @@
         <nuxt />
       </div>
     </transition>
-    <AppFooter></AppFooter>
+    <!-- <AppFooter></AppFooter> -->
   </div>
 </template>
 <script>
@@ -27,10 +27,13 @@ export default {
   background-color: #f8fcff;
   margin: 0;
   padding: 0;
+
   .app-main {
     min-height: calc(100vh - 94px);
     width: 100vw;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

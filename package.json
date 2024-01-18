@@ -39,6 +39,7 @@
     "prismjs": "^1.29.0",
     "sass": "^1.69.5",
     "sass-loader": "^10.5.1",
+    "three": "^0.160.0",
     "viewerjs": "^1.6.1",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",

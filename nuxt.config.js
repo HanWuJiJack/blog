@@ -16,74 +16,74 @@ module.exports = {
     title: 'hsueh的blog',
     titleTemplate: 'hsueh - %s',
     meta: [{
-        charset: 'utf-8'
-      },
-      // {
-      //   hid: 'google-site-verification',
-      //   name: 'google-site-verification',
-      //   content: 'wgv4IBDBiQSNfAp7YBzgc5UukUyB1hLAF8X3DhI3wyY'
-      // },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'hsueh的blog'
-      },
-      {
-        hid: 'keywords',
-        name: 'keywords',
-        content: 'hsueh的blog'
-      },
-      {
-        hid: 'author',
-        name: 'Team',
-        content: 'hsueh'
-      },
-      {
-        hid: 'renderer',
-        name: 'renderer',
-        content: 'webkit|ie-comp|ie-stand'
-      },
-      {
-        hid: 'http-equiv',
-        'http-equiv': 'X-UA-Compatible',
-        content: 'IE=edge,chrome=1'
-      },
-      {
-        hid: 'renderer',
-        name: 'renderer',
-        content: 'webkit|ie-comp|ie-stand'
-      },
-      {
-        hid: 'og:type',
-        name: 'og:type',
-        content: 'webpage'
-      },
-      {
-        hid: 'og:title',
-        name: 'og:title',
-        content: 'hsueh的blog'
-      },
-      {
-        hid: 'og:site_name',
-        name: 'og:site_name',
-        content: 'hsueh的blog'
-      },
-      {
-        hid: 'og:url',
-        name: 'og:url',
-        content: 'https://hanwujijack.github.io/blog/'
-      }
+      charset: 'utf-8'
+    },
+    // {
+    //   hid: 'google-site-verification',
+    //   name: 'google-site-verification',
+    //   content: 'wgv4IBDBiQSNfAp7YBzgc5UukUyB1hLAF8X3DhI3wyY'
+    // },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
+    },
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'hsueh的blog'
+    },
+    {
+      hid: 'keywords',
+      name: 'keywords',
+      content: 'hsueh的blog'
+    },
+    {
+      hid: 'author',
+      name: 'Team',
+      content: 'hsueh'
+    },
+    {
+      hid: 'renderer',
+      name: 'renderer',
+      content: 'webkit|ie-comp|ie-stand'
+    },
+    {
+      hid: 'http-equiv',
+      'http-equiv': 'X-UA-Compatible',
+      content: 'IE=edge,chrome=1'
+    },
+    {
+      hid: 'renderer',
+      name: 'renderer',
+      content: 'webkit|ie-comp|ie-stand'
+    },
+    {
+      hid: 'og:type',
+      name: 'og:type',
+      content: 'webpage'
+    },
+    {
+      hid: 'og:title',
+      name: 'og:title',
+      content: 'hsueh的blog'
+    },
+    {
+      hid: 'og:site_name',
+      name: 'og:site_name',
+      content: 'hsueh的blog'
+    },
+    {
+      hid: 'og:url',
+      name: 'og:url',
+      content: 'https://hanwujijack.github.io/blog/'
+    }
 
     ],
     link: [{
       rel: 'icon',
       type: 'image/x-icon',
       href: '/blog/favicon.ico'
-    }, ],
+    },],
     script: [
       // Google Analytics Code
       // {
@@ -226,9 +226,9 @@ module.exports = {
    */
   build: {
     // 防止多次打包
-    vendor: ["axios"],
+    vendor: ["axios", 'three'],
     publicPath: "/static/",
-    transpile: [/^element-ui/],
+    transpile: [/^element-ui/, 'three'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
     extractCSS: {
       allChunks: true
@@ -242,7 +242,7 @@ module.exports = {
     ssr: true,
     // ssr: false,
     babel: {
-      // compact: false,
+      compact: false,
       plugins: [
         [
           'prismjs',

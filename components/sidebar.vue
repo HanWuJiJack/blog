@@ -20,6 +20,12 @@
             <nuxt-link to="/info" tag="a">hsueh</nuxt-link>
           </div>
         </div>
+        <div class="contact-method clearfix">
+          <div class="contact-label">3D：</div>
+          <div class="contact-detail">
+            <nuxt-link to="/three" tag="a">three</nuxt-link>
+          </div>
+        </div>
       </div>
     </section>
   </aside>
