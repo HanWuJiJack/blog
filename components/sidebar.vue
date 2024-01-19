@@ -4,7 +4,7 @@
     <section class="module-css">
       <div class="module-title">联系我</div>
       <div class="module-item-wrap contact-me">
-        <div class="contact-method clearfix">
+        <!-- <div class="contact-method clearfix">
           <div class="contact-label">邮箱：</div>
           <div class="contact-detail"><a href="mailto:brandhuang@qq.com">79571635@qq.com</a></div>
         </div>
@@ -13,7 +13,7 @@
           <div class="contact-detail">
             <a href="https://github.com/HanWuJiJack" target="_blank">https://github.com/HanWuJiJack</a>
           </div>
-        </div>
+        </div> -->
         <div class="contact-method clearfix">
           <div class="contact-label">个人信息：</div>
           <div class="contact-detail">
