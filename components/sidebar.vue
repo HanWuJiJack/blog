@@ -21,9 +21,9 @@
           </div>
         </div>
         <div class="contact-method clearfix">
-          <div class="contact-label">3D：</div>
+          <div class="contact-label">3D简介：</div>
           <div class="contact-detail">
-            <nuxt-link to="/three" tag="a">three</nuxt-link>
+            <nuxt-link to="/three" tag="a">一颗小水星~</nuxt-link>
           </div>
         </div>
       </div>
