@@ -48,6 +48,7 @@ export default {
     window.onresize = null;
   },
   mounted() {
+    let audio
     function getSceneModelFaceNum(view) {
       let scene = view;
       let objects = []; // 场景模型对象
@@ -63,7 +64,7 @@ export default {
       const percentDiv = document.getElementById("per");// 获取进度条元素
       percentDiv.style.width = p * 400 + "px";//进度条元素长度
       percentDiv.style.textIndent = p * 400 + 5 + "px";//缩进元素中的首行文本
-      percentDiv.innerHTML = p * 100 + "%";//进度百分比
+      percentDiv.innerHTML = parseInt(p * 100) + "%";//进度百分比
     }
     function closeschedule() {
       const percentDiv = document.getElementById("container");// 获取进度条元素
@@ -157,11 +158,11 @@ export default {
     const title = document.createElement('div');
     title.innerHTML = `
 	<div class="elementContent">
-	  <h5>点击地球吧~</h5> 
+	  <h5>点击地球开始自我简介~</h5> 
 	</div>
   `;
     const objcss3dtitle = new CSS3DSprite(title);
-    objcss3dtitle.position.x = 0
+    objcss3dtitle.position.x = width * 0.1
     objcss3dtitle.position.y = height * 0.8
     objcss3dtitle.position.z = deep - 1000
 
@@ -240,7 +241,7 @@ export default {
       scene.add(pointsCube)
     })
 
-    let xhrs = 10
+    let xhrs = 100
     let percentNum = 0
     let percentNumW = 0
     function percentFn() {
@@ -250,7 +251,7 @@ export default {
           percentNum += 1;
           sum_ = -1
         }
-        let percent = percentNum / xhrs
+        let percent = (percentNum / xhrs).toFixed(2)
         if (percent < 1) {
           initschedule(percent)
         } else {
@@ -320,18 +321,26 @@ export default {
         outlinePass.selectedObjects.push(this);
       }
       objcss3d.visible = !objcss3d.visible
-
-      let audio = new Audio();
-      audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
-      audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-        audio.play();
-      });
-      audio.addEventListener("ended", (event) => {
-        audio.pause()
-        audio.removeAttribute('src')
-        audio.remove()
-        audio = null
-      });
+      if (audio) {
+        // 检查音频是否已暂停：
+        if (audio.paused) {
+          audio.play()
+        } else {
+          audio.pause()
+        }
+      } else {
+        audio = new Audio();
+        audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
+        audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+          audio.play();
+        });
+        audio.addEventListener("ended", (event) => {
+          audio.pause()
+          audio.removeAttribute('src')
+          audio.remove()
+          audio = null
+        });
+      }
     }
     outlinePass.visibleEdgeColor.set(0xffff00);
     outlinePass.edgeThickness = 4;
@@ -355,22 +364,16 @@ export default {
     const color = new THREE.Color()
     const colors = [color.set("#084c68").clone(), color.set("#ffffff").clone(), color.set("#738391").clone()]
 
-    let num = 0
+    let num30 = 0
+    let num5 = 0
     function animate() {
-      if (objcss3dtitle.position.x < width) {
+      if (objcss3dtitle.position.x < width * 0.9) {
         objcss3dtitle.position.x += 1
       } else {
-        objcss3dtitle.position.x = 0
+        objcss3dtitle.position.x = width * 0.1
       }
-      num++;
-      if (num >= 30) {
-        // 计算切换
-        if (percentNumW < 9) {
-          percentNumW++;
-          percentNum++;
-          percentFn_.tu()
-          // console.log("percentNum", percentNum)
-        }
+      num30++;
+      if (num30 >= 30) {
         // 星体闪烁
         pointsCubes_.forEach((pointsCube) => {
           if (pointsCube.material.colorIndex > 2) {
@@ -379,7 +382,17 @@ export default {
           pointsCube.material.color = colors[pointsCube.material.colorIndex]
           pointsCube.material.colorIndex++;
         })
-        num = 0
+        num30 = 0
+      }
+      num5++;
+      if (num5 >= 5) {
+        // 计算切换
+        if (percentNumW < 99) {
+          percentNumW++;
+          percentNum++;
+          percentFn_.tu()
+        }
+        num5 = 0
       }
       requestAnimationFrame(animate)
       // controls.update();

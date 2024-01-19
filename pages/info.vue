@@ -4,7 +4,7 @@
     <div class="pdf" ref="box">
       <div class="userInfo">
         <el-descriptions title="Hsueh" :column="2">
-          <el-descriptions-item label="求职意向">java go node</el-descriptions-item>
+          <el-descriptions-item label="求职意向">全栈工程师</el-descriptions-item>
           <el-descriptions-item label="工作时间">2018年11月 - {{ `${new Date().getFullYear()}年${new Date().getMonth() +
             1}月` }}</el-descriptions-item>
           <el-descriptions-item label="性别">男</el-descriptions-item>
@@ -13,7 +13,14 @@
         </el-descriptions>
       </div>
       <div class="box_title">
-        Web前端开发经历
+        个人优势
+      </div>
+      <p class="text__">
+        作为一个拥有五年工作经验的开发者，我精通Node.js、Redis、MySQL、 RabbitMQ、react、vue 、微信小程序 等 技术。在过去的五年里，我积累了丰富的项目经验，包括 Web
+        应用开发、微服务架构、分布式系统设计和实现等。
+      </p>
+      <div class="box_title">
+        工作经历
       </div>
       <div class="box_head">
         <span class="text_ box_head_title">2021年6月 - {{ `${new Date().getFullYear()}年${new Date().getMonth() +
@@ -25,31 +32,24 @@
           工作内容：
         </p>
         <p class="text__" style="padding-left: 20px">
-          1、新系统搭建，负责新系统前端从0到1搭建；
+          1. 管道检测平台系统开发：负责推动公司开发管道检测平台系统，包括需求分析、系统设计、编码实现、测试和部署等工作；
         </p>
         <p class="text__" style="padding-left: 20px">
-          2、新功能开发，主要指综合管理系统新增功能模块开发、h5展示页面开发
+          2、新功能开发，主要指综合管理系统新增功能模块开发、h5展示页面开发；
         </p>
         <p class="text__" style="padding-left: 20px">
-          3、维护系统包含：
-          <br />
-          新系统：综合管理后台系统（OA审批流（动态组件）、大文件上传（分片上传））、
-          <br />
-          遗留系统：公司官网、相控阵后台管理系统、远传后台管理系统（管道检查相关）、售后管理系统和售后小程序（主要包含设备卖出后年检和售后记录）
+          3、维护系统；
         </p>
         <p class="text__" style="padding-left: 20px">
           4、参与需求评审会和产品经理,后端讨论项目如何具体落地；
         </p>
-        <p class="text__" style="padding-left: 20px">
-          5、和后端定义好数据结构和具体字段，mock数据进行前端开发；
-        </p>
         <p class="text_">
-          主要技术栈：
+          公司技术栈：
         </p>
         <div class="text__" style="padding-left: 20px">
-          <p>综合管理后台系统、远传后台管理系统、售后管理系统、H5：Vue+VueRouter+Vuex+Element+Axios+Eslint+Less</p>
-          <p>相控阵后台管理系统：React+ReactRouterDom+ReactRedux+ReduxThunk+Axios+Typescript+Eslint+Less</p>
-          <p>售后小程序：微信小程序原生开发</p>
+          <p>综合管理后台系统、远传后台管理系统、售后管理系统、H5：Vue+VueRouter+Vuex+Element+Axios+Eslint+Less；</p>
+          <p>相控阵后台管理系统：React+ReactRouterDom+ReactRedux+ReduxThunk+Axios+Typescript+Eslint+Less；</p>
+          <p>售后小程序：微信小程序原生开发；</p>
         </div>
       </div>
       <div class="box_head">
@@ -61,26 +61,22 @@
           工作内容：
         </p>
         <p class="text__" style="padding-left: 20px">
-          1、新功能开发，主要指母婴综合管理系统和智零售App新增功能模块开发
+          1、新功能开发，主要指母婴综合管理系统和智零售App新增功能模块开发；
         </p>
         <p class="text__" style="padding-left: 20px">
-          2、维护系统包含：
-          <br />
-          母婴综合管理系统、智零售App、nb3后台管理系统（用于门店管理智能卖货的小程序和智零售App）
+          2、维护系统包含：母婴综合管理系统、智零售App、nb3后台管理系统（用于门店管理智能卖货的小程序和智零售App）等；
         </p>
         <p class="text__" style="padding-left: 20px">
-          3、参与需求评审会和产品经理,后端讨论项目如何具体落地；并且给出项目经理具体开发时间。
-        </p>
-        <p class="text__" style="padding-left: 20px">
-          4、和后端定义好数据结构和具体字段，mock数据进行前端开发；
+          3、参与需求评审会和产品经理,后端讨论项目如何具体落地；并且给出项目经理具体开发时间；
         </p>
         <p class="text_">
           主要技术栈：
         </p>
         <p class="text__" style="padding-left: 20px">
-          母婴综合管理系统、nb3后台管理系统：Angularjs(1.5.6)+Material+Nginx
-          <br />
-          智零售App：ReactNativ（React+reactNavigation+ReactRedux+reduxSaga+Fetch+Less）
+          母婴综合管理系统、nb3后台管理系统：Angularjs(1.5.6)+Material+Nginx；
+        </p>
+        <p class="text__" style="padding-left: 20px">
+          智零售App：ReactNativ（React+reactNavigation+ReactRedux+reduxSaga+Fetch+Less）；
         </p>
       </div>
       <div class="box_head">
@@ -92,65 +88,22 @@
           工作内容：
         </p>
         <p class="text__" style="padding-left: 20px">
-          1、以产品经理的身份和用户对接需求，和ui设计师对接页面展示
+          1、以产品经理的身份和用户对接需求，和ui设计师对接页面展示效果。
         </p>
         <p class="text__" style="padding-left: 20px">
-          2、新系统搭建，负责新系统前端从0到1搭建包含：
-          <br />
-          移动端：h5，微信小程序；
-          <br />
-          pc端：后台管理系统、公司官网
+          2、新系统搭建，负责新系统前端从0到1搭建类型有： h5，微信小程序，后台管理系统，公司官网。
         </p>
         <p class="text__" style="padding-left: 20px">
-          3、维护系统包含：
-          <br />
-          律师事务所前台和后台系统、青山回收、艾兰岛、B&W官网等
-        </p>
-        <p class="text__" style="padding-left: 20px">
-          4、和后端定义好数据结构和具体字段，mock数据进行前端开发；
+          3、维护老系统。
         </p>
         <p class="text_">
           主要技术栈：
         </p>
         <p class="text__" style="padding-left: 20px">
-          律师事务所前台和后台系统：
-          前台：原生+jquery；
-          后台：vue+jquery；
-          <br />
-          艾兰岛、青山回收后台管理系统：React+ReactRouter+ReactRedux+ReduxSaga+Axios;<br />
-          青山回收小程序：Taro(开放式跨端跨框架解决方案)+React全家桶;<br />
-          B&W官网:express+express-art-template+jquery；
+          律师事务所系统：vue，adonis。<br />
+          青山回收小程序：Taro(开放式跨端跨框架解决方案)，React全家桶，adonis。<br />
+          B&W官网:express，express-art-template，jquery。<br />
         </p>
-      </div>
-      <span class="box_title">
-        技能点
-      </span>
-      <div class="break_page">
-        <p class="text_">
-          工作常用：
-        </p>
-        <div class="text__" style="padding-left: 20px">
-          <p>vue2和vue3(Vue、VueRouter、Vuex、Element、Axios、Eslint、Less)</p>
-          <p> React(React、ReactRouterDom、ReactRedux、ReduxThunk、ReduxSaga、Axios、Typescript、Eslint、Less)</p>
-          <p>ReactNative</p>
-          <p>微信小程序原生开发</p>
-          <p>Nginx</p>
-          <p>webPack</p>
-        </div>
-        <p class="text_">
-          自学积累：
-        </p>
-        <div class="text__" style="padding-left: 20px">
-          <p>Electron</p>
-          <p>Koa(node框架)+Sequelize(基于 promise 的 Node.js ORM)</p>
-          <p>Adonis(node框架)</p>
-          <p>Mysql（57:latin1/80：utf8mb4）</p>
-          <p>Mongodb</p>
-          <p>Redis</p>
-          <p>Linux系统（centos 7）</p>
-          <p>Java基础、spring、springMVC、mybatis+mybatisPuls、springBoot</p>
-          <p>Rabbitmq</p>
-        </div>
       </div>
       <span class="box_title">
         自我评价
@@ -184,11 +137,12 @@
             <img width="30" src="@/assets/images/GitHub.png" alt="" />
           </a>
         </p>
-        <p class="text__" style="padding-top: 20px, cursor: pointer">
-          <!-- <a href="https://s1.z100.vip:8555/vue/welcome" target="_blank" rel="noopener noreferrer">开源项目体验地址</a> -->
-        </p>
+        <!-- <p class="text__" style="padding-top: 20px, cursor: pointer">
+        <a href="https://s1.z100.vip:8555/vue/welcome" target="_blank" rel="noopener noreferrer">开源项目体验地址</a>
+      </p> -->
       </div>
     </div>
+
   </div>
 </template>
 
@@ -326,4 +280,5 @@ export default {
   }
 
   // #4395ff
-}</style>
+}
+</style>

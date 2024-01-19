@@ -96,3 +96,5 @@ nginx 配置
 
 <!-- https://hanwujijack.github.io/blog/favicon.ico -->
 
+
+尊敬的招聘团队，您好！我是一位全栈工程师，男性，1997年1月生，拥有五年的工作经验。我专注于Node.js、Redis、MySQL、RabbitMQ、React、Vue、微信小程序等技术领域。在过去的五年里，我积累了丰富的项目经验，包括Web应用开发、微服务架构、分布式系统设计和实现等。在我最近的工作经历中，我于2021年6月至2024年1月在上海海骄有限公司担任全栈工程师一职。我负责推动公司管道检测平台系统的开发，从需求分析、系统设计、编码实现、测试到部署等全流程。此外，我也参与了新功能的开发，包括综合管理系统新增功能模块和H5展示页面。我熟练掌握Vue、VueRouter、Vuex、Element、Axios、Eslint、Less等技术栈，并在相控阵后台管理系统中应用了React、ReactRouterDom、ReactRedux、ReduxThunk、Axios、Typescript、Eslint、Less等技术。在之前的工作中，我曾在上海致维网络有限公司和上海星轨网络有限公司任职，参与了母婴综合管理系统、智零售App、律师事务所系统、青山回收小程序等项目的开发和维护，运用了AngularJS、Material、Nginx、ReactNative、ReactNavigation、ReactRedux、reduxSaga、Fetch、Express、Adonis等技术。我以真诚、谦虚、好学、乐观开朗的态度对待工作，具备较强的责任心和团队合作精神。在面对问题时，我更愿意通过行动解决，而不是抱怨。我对自己要求严格，注重高质量的工作。我的教育背景包括在安徽机电职业技术学院获得的大专学历，以及正在阜阳师范大学攻读的本科学历。感谢您抽出时间阅读我的简介。期待有机会加入贵公司，为您的团队贡献我的技术和经验。谢谢！
