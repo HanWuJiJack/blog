@@ -2,9 +2,6 @@
   <div class="body">
     <el-button @click="pdfDown_" class="exportButton">导出</el-button>
     <div class="pdf" ref="box">
-      <!-- <div class="shuiyin-box">
-        <div class="shuiyin">hsueh</div>
-      </div> -->
       <div class="context">
         <div class="userInfo">
           <el-descriptions title="Hsueh" :column="2">
