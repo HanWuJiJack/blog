@@ -15,68 +15,69 @@ module.exports = {
   head: {
     title: 'hsueh的blog',
     titleTemplate: 'hsueh - %s',
-    meta: [{
-      charset: 'utf-8'
-    },
-    // {
-    //   hid: 'google-site-verification',
-    //   name: 'google-site-verification',
-    //   content: 'wgv4IBDBiQSNfAp7YBzgc5UukUyB1hLAF8X3DhI3wyY'
-    // },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
-    },
-    {
-      hid: 'description',
-      name: 'description',
-      content: 'hsueh的blog'
-    },
-    {
-      hid: 'keywords',
-      name: 'keywords',
-      content: 'hsueh的blog'
-    },
-    {
-      hid: 'author',
-      name: 'Team',
-      content: 'hsueh'
-    },
-    {
-      hid: 'renderer',
-      name: 'renderer',
-      content: 'webkit|ie-comp|ie-stand'
-    },
-    {
-      hid: 'http-equiv',
-      'http-equiv': 'X-UA-Compatible',
-      content: 'IE=edge,chrome=1'
-    },
-    {
-      hid: 'renderer',
-      name: 'renderer',
-      content: 'webkit|ie-comp|ie-stand'
-    },
-    {
-      hid: 'og:type',
-      name: 'og:type',
-      content: 'webpage'
-    },
-    {
-      hid: 'og:title',
-      name: 'og:title',
-      content: 'hsueh的blog'
-    },
-    {
-      hid: 'og:site_name',
-      name: 'og:site_name',
-      content: 'hsueh的blog'
-    },
-    {
-      hid: 'og:url',
-      name: 'og:url',
-      content: 'https://hanwujijack.github.io/blog/'
-    }
+    meta: [
+      {
+        charset: 'utf-8'
+      },
+      // {
+      //   hid: 'google-site-verification',
+      //   name: 'google-site-verification',
+      //   content: 'wgv4IBDBiQSNfAp7YBzgc5UukUyB1hLAF8X3DhI3wyY'
+      // },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'author',
+        name: 'Team',
+        content: 'hsueh'
+      },
+      {
+        hid: 'renderer',
+        name: 'renderer',
+        content: 'webkit|ie-comp|ie-stand'
+      },
+      {
+        hid: 'http-equiv',
+        'http-equiv': 'X-UA-Compatible',
+        content: 'IE=edge,chrome=1'
+      },
+      {
+        hid: 'renderer',
+        name: 'renderer',
+        content: 'webkit|ie-comp|ie-stand'
+      },
+      {
+        hid: 'og:type',
+        name: 'og:type',
+        content: 'webpage'
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        content: 'hsueh的blog'
+      },
+      {
+        hid: 'og:url',
+        name: 'og:url',
+        content: 'https://hanwujijack.github.io/blog/'
+      }
 
     ],
     link: [{

@@ -2,7 +2,9 @@
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 class PdfLoader {
-    constructor(ele, pdfFileName,
+    constructor(ele,
+        pdfFileName,
+        filtersClass = [],
         pdf = {
             top: 20,
             bottom: 0,
@@ -23,11 +25,13 @@ class PdfLoader {
         this.head = head
         this.foot = foot
         this.ele = ele;
+        this.ele.style.width = "595px"
         this.pdfFileName = pdfFileName;
         this.A4_WIDTH = 595;
         this.A4_HEIGHT = 842;
         this.pageHeight = 0
         this.pageNum = 1
+        this.filtersClass = filtersClass
         this.init = 0 //加首页页眉
     };
     async getPDF(resolve) {
@@ -35,6 +39,22 @@ class PdfLoader {
         let pdfFileName = this.pdfFileName
         let eleW = ele.offsetWidth // 获得该容器的宽
         let eleH = ele.scrollHeight // 获得该容器的高
+
+        // 添加水印
+        const shuiyinNumW = Math.ceil(eleW / 70)
+        const shuiyinNumH = Math.ceil(eleH / 70)
+
+        for (let i = 0; i < shuiyinNumW; i++) {
+            for (let j = 0; j < shuiyinNumH; j++) {
+                const shuiyin = document.createElement("div")
+                shuiyin.className = 'shuiyin-box';
+                shuiyin.innerHTML = '<div class="shuiyin">hsueh</div>'
+                shuiyin.style.top = j * 70 + "px"
+                shuiyin.style.left = i * 70 + "px"
+                this.ele.appendChild(shuiyin)
+            }
+        }
+        // 添加水印
         let eleOffsetTop = ele.offsetTop // 获得该容器到文档顶部的距离
         let eleOffsetLeft = ele.offsetLeft // 获得该容器到文档最左的距离
         let canvas = document.createElement("canvas")
@@ -97,8 +117,13 @@ class PdfLoader {
                 for (let i = 0; i < head.length; i++) {
                     head[i].remove();
                 }
+                let shuiyin = document.querySelectorAll('.shuiyin-box ')
+                for (let i = 0; i < shuiyin.length; i++) {
+                    shuiyin[i].remove();
+                }
                 this.ele.style.height = '';
                 this.ele.style.padding = '';
+                this.ele.style.width = ''
                 resolve();
             });
         })
@@ -124,57 +149,60 @@ class PdfLoader {
     domEach(dom) {
         let childNodes = dom.childNodes
         childNodes.forEach((childDom, index) => {
-            let divParent = childDom.parentNode; // 获取该div的父节点
-            if (this.init == 0) {
-                if (this.head.top - this.pdf.top < 0) {
-                    throw new Error("head顶部距离请大于pdf顶部距离")
-                }
-                // this.addHeaderDiv(childDom, divParent, 20)
-                this.addHeaderDiv(childDom, divParent, this.head.top - this.pdf.top)
-                this.init++
-                this.domEach(dom)
-                return
-            }
-            if (childDom.getBoundingClientRect) {
-                let eleBounding = this.ele.getBoundingClientRect();
-                const now = childDom.getBoundingClientRect();
-                if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
-                    if (now.height + 40 + this.head.top + this.head.bottom + this.foot.top + this.foot.bottom + -this.pageHeight > 0) {
-                        throw new Error("单行不允许超过A4纸高度！")
+            if (!this.filtersClass.map(item => this.hasClass(childDom, item)).includes(true)) {
+                let divParent = childDom.parentNode; // 获取该div的父节点
+                if (this.init == 0) {
+                    if (this.head.top - this.pdf.top < 0) {
+                        throw new Error("head顶部距离请大于pdf顶部距离")
                     }
+                    // this.addHeaderDiv(childDom, divParent, 20)
+                    this.addHeaderDiv(childDom, divParent, this.head.top - this.pdf.top)
+                    this.init++
+                    this.domEach(dom)
+                    return
                 }
-                // console.log("=>now:", now)
-                const PageButtom = now.bottom - eleBounding.top
-                const PageTop = now.top - eleBounding.top
-                if (PageButtom - this.pageNum * parseInt(this.pageHeight) + (this.foot.top + this.foot.bottom + 20 + 30) >= 0) {
-                    // console.log("=>", now, this.pageHeight, this.pageNum)
-                    const differTop = this.pageNum * parseInt(this.pageHeight) - PageTop // 计算获取当前节点到页底的距离
-                    const differButtom = this.pageNum * parseInt(this.pageHeight) - PageButtom // 计算获取当前节点到页底的距离
-                    if (differButtom >= (this.foot.top + this.foot.bottom + 20)) {
-                        let divParent = childDom.parentNode; // 获取该div的父节点
-                        const newNode = this.addEmptyDiv(childDom.nextSibling, differButtom - (this.foot.top + this.foot.bottom + 20), divParent)
-                        const pageFooter = this.addFootDiv(newNode.nextSibling, divParent)
-                        this.addHeaderDiv(pageFooter.nextSibling, divParent)
-                        this.pageNum++
-                        this.domEach(dom)
-                        return
-                    } else {
-                        if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
+                if (childDom.getBoundingClientRect) {
+                    let eleBounding = this.ele.getBoundingClientRect();
+                    const now = childDom.getBoundingClientRect();
+                    if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
+                        if (now.height + 40 + this.head.top + this.head.bottom + this.foot.top + this.foot.bottom + -this.pageHeight > 0) {
+                            throw new Error("单行不允许超过A4纸高度！")
+                        }
+                    }
+                    // console.log("=>now:", now)
+                    const PageButtom = now.bottom - eleBounding.top
+                    const PageTop = now.top - eleBounding.top
+                    if (PageButtom - this.pageNum * parseInt(this.pageHeight) + (this.foot.top + this.foot.bottom + 20 + 30) >= 0) {
+                        // console.log("=>", now, this.pageHeight, this.pageNum)
+                        const differTop = this.pageNum * parseInt(this.pageHeight) - PageTop // 计算获取当前节点到页底的距离
+                        const differButtom = this.pageNum * parseInt(this.pageHeight) - PageButtom // 计算获取当前节点到页底的距离
+                        if (differButtom >= (this.foot.top + this.foot.bottom + 20)) {
                             let divParent = childDom.parentNode; // 获取该div的父节点
-                            const newNode = this.addEmptyDiv(childDom, differTop - (this.foot.top + this.foot.bottom + 20), divParent)
-                            const pageFooter = this.addFootDiv(childDom, divParent)
-                            this.addHeaderDiv(childDom, divParent)
+                            const newNode = this.addEmptyDiv(childDom.nextSibling, differButtom - (this.foot.top + this.foot.bottom + 20), divParent)
+                            const pageFooter = this.addFootDiv(newNode.nextSibling, divParent)
+                            this.addHeaderDiv(pageFooter.nextSibling, divParent)
                             this.pageNum++
                             this.domEach(dom)
                             return
+                        } else {
+                            if (this.hasClass(childDom, "line") || !childDom.childNodes || childDom.childNodes.length === 0) {
+                                let divParent = childDom.parentNode; // 获取该div的父节点
+                                const newNode = this.addEmptyDiv(childDom, differTop - (this.foot.top + this.foot.bottom + 20), divParent)
+                                const pageFooter = this.addFootDiv(childDom, divParent)
+                                this.addHeaderDiv(childDom, divParent)
+                                this.pageNum++
+                                this.domEach(dom)
+                                return
+                            }
                         }
-                    }
 
+                    }
+                }
+                if (childDom.childNodes.length) {
+                    this.domEach(childDom)
                 }
             }
-            if (childDom.childNodes.length) {
-                this.domEach(childDom)
-            }
+
         })
     }
     // 添加尾页
@@ -219,7 +247,7 @@ class PdfLoader {
         pageFooter.className = "pdf-foot"
         pageFooter.innerHTML = "第" + this.pageNum + " 页"
         pageFooter.style.paddingTop = paddingTop + "px"
-        pageFooter.style.fontSize = 14 + "px"
+        pageFooter.style.fontSize = 12 + "px"
         pageFooter.style.textAlign = "center"
         pageFooter.style.lineHeight = 20 + "px"
         pageFooter.style.paddingBottom = paddingBottom + "px"
@@ -240,10 +268,11 @@ class PdfLoader {
         pageHeader.innerHTML = "hsueh" + ` - ${new Date().getFullYear()}年${new Date().getMonth() + 1}月`
         pageHeader.style.paddingTop = paddingTop + "px"
 
-        pageHeader.style.lineHeight = 19 + "px"
+        pageHeader.style.lineHeight = 15 + "px"
         pageHeader.style.borderBottom = "1px solid #ccc"
-        pageHeader.style.fontSize = 14 + "px"
-        pageHeader.style.paddingBottom = paddingBottom + "px"
+        pageHeader.style.fontSize = 12 + "px"
+        pageHeader.style.paddingBottom = "4px"
+        pageHeader.style.marginBottom = paddingBottom + "px"
         divParent.insertBefore(pageHeader, node);
         return pageHeader
     }
@@ -259,8 +288,8 @@ class PdfLoader {
 }
 
 export default function (htmlTitle, ref) {
-    let pdf = new PdfLoader(ref, htmlTitle);
-    pdf.outPutPdfFn(htmlTitle);
+    let pdf = new PdfLoader(ref, htmlTitle, ['shuiyinBox']);
+    return pdf.outPutPdfFn(htmlTitle);
 }
 
 
