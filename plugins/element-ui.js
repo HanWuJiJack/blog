@@ -48,8 +48,12 @@ export default () => {
     });
   }
   Vue.prototype.go = function (path) {
-    this.$router.push({
-      path
-    });
+    if (path) {
+      this.$router.push({
+        path
+      });
+    } else {
+      this.$router.back()
+    }
   }
 }

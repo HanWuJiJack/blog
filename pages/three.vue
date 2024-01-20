@@ -1,5 +1,6 @@
 <template>
   <div ref="canvas">
+    <div class="back" @click="go()">返回</div>
     <div id="container">
       <div id="per-box">
         <div id="per"> </div>
@@ -423,6 +424,19 @@ export default {
 }
 </style>
 <style scoped lang="scss">
+.back {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 14px;
+  background-color: #00ffff;
+}
+
 /* 进度条css样式 */
 #container {
   position: fixed;
