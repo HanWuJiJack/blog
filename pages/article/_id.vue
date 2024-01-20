@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div id="editor-content-view" class="editor-content-view"></div>
+    <div ref="edit" class="editor-content-view"></div>
   </client-only>
 </template>
 <script>
@@ -8,20 +8,15 @@ import { getBlogInfo } from "@/api/service"
 export default {
   watchQuery: true,
   layout: 'nor',
-  // async asyncData({ params, error, payload, store }) {
-  //   if (payload) {
-  //     return { html: payload.html, name: payload.name, }
-  //   } else {
-  //     // const res = await getBlogInfo(params.id)
-  //     // return { html: res.data.html, name: res.data.name, }
-  //     // const payload = store.state.article.list.find((item) => item.id == params.id)
-  //     // return { html: payload.html, name: payload.name, }
-  //     const payload = store.state.article.info[params.id]
-  //     return { html: payload.html, name: payload.name, }
-  //   }
-  // },
-  async fetch({ query, store, params }) {
-    await store.dispatch('article/getArticleInfo', { id: params.id })
+  async asyncData({ params, error, payload, store }) {
+    if (payload) {
+      return { html: payload.html, name: payload.name, }
+    } else {
+      // const res = await getBlogInfo(params.id)
+      // return { html: res.data.html, name: res.data.name, }
+      const payload = store.state.article.list.find((item) => item.id == params.id)
+      return { html: payload.html, name: payload.name, }
+    }
   },
   data() {
     return {
@@ -46,14 +41,11 @@ export default {
   methods: {},
   mounted() {
     setTimeout(() => {
-      const payload = this.$store.state.article.info[this.$route.params.id]
-      // console.log("payload", payload,this.$route.params.id)
-      document.getElementById('editor-content-view').innerHTML = payload.html.replaceAll('<code class="language-', '<code class="line-numbers language-')
+      this.$refs.edit.innerHTML = this.html.replaceAll('<code class="language-', '<code class="line-numbers language-')
       this.$nextTick(() => {
         Prism.highlightAll()
       })
     }, 0);
-
   },
 };
 </script>
