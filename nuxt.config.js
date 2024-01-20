@@ -1,6 +1,7 @@
 const axios = require('axios')
 const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
+
   // 'spa': 没有服务器端渲染（只有客户端路由导航等）
   // 'universal': 同构应用程序（服务器端呈现+客户端路由导航等）
   mode: 'universal',
@@ -307,6 +308,7 @@ module.exports = {
     },
   },
   generate: {
+    dir: 'blog',
     // routes: ['/article/1', '/article/2', '/article/3']
     // routes() {
     //   return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
@@ -326,6 +328,7 @@ module.exports = {
         })
       })
     },
-    subFolders: false
+    // 默认情况下，运行nuxt generate将为每个路由创建一个目录并生成index.html文件。
+    // subFolders: false
   },
 }

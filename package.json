@@ -11,7 +11,7 @@
     "start": "nuxt start",
     "generate": "cross-env ENV_=pro nuxt generate",
     "generate:gh": "cross-env ENV_=pro PATH_=2 DEPLOY_ENV=GH_PAGES nuxt generate",
-    "deploy": "push-dir --dir=dist --branch=master --allow-unclean",
+    "deploy": "push-dir --dir=blog --branch=master --allow-unclean",
     "test": "jest"
   },
   "dependencies": {
