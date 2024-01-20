@@ -25,7 +25,7 @@ export const actions = {
         pageNum: 1,
         pageSize: 9999
       })
-      commit('article/SET_All_SUCCESS', res.data.list)
+      commit('article/SET_All_SUCCESS', res.data.list.map(item => { return { id: item.id, name: item.name } }))
     } catch (error) {
       ctx.error({
         statusCode: 403,

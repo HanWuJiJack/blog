@@ -12,10 +12,10 @@ export default {
     if (payload) {
       return { html: payload.html, name: payload.name, }
     } else {
-      // const res = await getBlogInfo(params.id)
-      const payload = store.state.article.list.find((item) => item.id == params.id)
-      return { html: payload.html, name: payload.name, }
-      // return { html: res.data.html, name: res.data.name, }
+      const res = await getBlogInfo(params.id)
+      return { html: res.data.html, name: res.data.name, }
+      // const payload = store.state.article.list.find((item) => item.id == params.id)
+      // return { html: payload.html, name: payload.name, }
     }
   },
   data() {
@@ -89,4 +89,5 @@ export default {
   img {
     width: 100%;
   }
-}</style>
+}
+</style>

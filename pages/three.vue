@@ -49,6 +49,12 @@ export default {
   },
   mounted() {
     let audio
+    audio = new Audio();
+    audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
+    audio.addEventListener("ended", (event) => {
+      audio.currentTime = 0
+      audio.pause();
+    });
     function getSceneModelFaceNum(view) {
       let scene = view;
       let objects = []; // 场景模型对象
@@ -250,6 +256,7 @@ export default {
         if (sum_ === 2) {
           percentNum += 1;
           sum_ = -1
+
         }
         let percent = (percentNum / xhrs).toFixed(2)
         if (percent < 1) {
@@ -321,25 +328,10 @@ export default {
         outlinePass.selectedObjects.push(this);
       }
       objcss3d.visible = !objcss3d.visible
-      if (audio) {
-        // 检查音频是否已暂停：
-        if (audio.paused) {
-          audio.play()
-        } else {
-          audio.pause()
-        }
+      if (audio.paused) {
+        audio.play()
       } else {
-        audio = new Audio();
-        audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
-        audio.addEventListener("canplay", function () {//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
-          audio.play();
-        });
-        audio.addEventListener("ended", (event) => {
-          audio.pause()
-          audio.removeAttribute('src')
-          audio.remove()
-          audio = null
-        });
+        audio.pause()
       }
     }
     outlinePass.visibleEdgeColor.set(0xffff00);
@@ -356,7 +348,7 @@ export default {
       const raycaster = new THREE.Raycaster();
       raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
       const intersects = raycaster.intersectObjects(objects);
-      console.log("射线器返回的对象", intersects);
+      // console.log("射线器返回的对象", intersects);
       if (intersects.length > 0) {
         intersects[0].object.change()
       }
@@ -458,7 +450,6 @@ export default {
 #per {
   height: 100%;
   width: 0px;
-  transition: all 0.5s;
   background: #00ffff;
   color: #00ffff;
   line-height: 15px;
