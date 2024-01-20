@@ -1,9 +1,9 @@
 <template>
   <article class="articleList">
     <section v-if="articleList.total > 0" class="article-item" v-for="(item, index ) in articleList.list" :key="index">
-      <nuxt-link :to="`/article/${item.id}`">
+      <router-link :to="`/article/${item.id}`">
         <h3 class="article-title">{{ item.name }}</h3>
-      </nuxt-link>
+      </router-link>
     </section>
     <el-pagination style="text-align: center;margin-top: 15px;" v-if="articleList.total > 0" @current-change="getMoreArt"
       :current-page="pageNum" :page-size="pageSize" layout="prev, pager, next" :total="articleList.total">

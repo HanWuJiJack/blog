@@ -17,13 +17,13 @@
         <div class="contact-method clearfix">
           <div class="contact-label">个人信息：</div>
           <div class="contact-detail">
-            <nuxt-link to="/info" tag="a">hsueh</nuxt-link>
+            <router-link to="/info" tag="a">hsueh</router-link>
           </div>
         </div>
         <div class="contact-method clearfix">
           <div class="contact-label">3D简介：</div>
           <div class="contact-detail">
-            <nuxt-link to="/three" tag="a">一颗小水星~</nuxt-link>
+            <router-link to="/three" tag="a">一颗小水星~</router-link>
           </div>
         </div>
       </div>

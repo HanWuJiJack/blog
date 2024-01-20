@@ -19,11 +19,6 @@ module.exports = {
       {
         charset: 'utf-8'
       },
-      // {
-      //   hid: 'google-site-verification',
-      //   name: 'google-site-verification',
-      //   content: 'wgv4IBDBiQSNfAp7YBzgc5UukUyB1hLAF8X3DhI3wyY'
-      // },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'

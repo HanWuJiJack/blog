@@ -1,7 +1,7 @@
 <template>
   <header class="app-header">
     <nav class="nav_wrap clearfix" v-if="!isMobile">
-      <h2 class="logo"><nuxt-link to="/" tag="a">hsueh</nuxt-link></h2>
+      <h2 class="logo"><router-link to="/" tag="a">hsueh</router-link></h2>
       <div class="nav_box transition-box" v-show="isShow">
         <el-form :inline="true">
           <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
@@ -14,7 +14,7 @@
       </div>
     </nav>
     <nav class="nav_wrap clearfix" v-else>
-      <h1 class="logo"><nuxt-link to="/" tag="a">hsueh</nuxt-link></h1>
+      <h1 class="logo"><router-link to="/" tag="a">hsueh</router-link></h1>
       <div class="menu_icon">
         <i @click="showMenu($event)" class="el-icon-menu"></i>
       </div>
@@ -175,7 +175,7 @@ export default {
     }
   }
 
-  .nuxt-link-exact-active {
+  .router-link-exact-active {
     color: #000 !important;
     font-weight: bold;
   }
