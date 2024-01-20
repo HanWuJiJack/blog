@@ -187,7 +187,7 @@ export default {
 
         .contact-label {
           float: left;
-          width: 60px;
+          width: 70px;
         }
 
         .contact-detail {

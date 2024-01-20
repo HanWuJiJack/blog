@@ -49,6 +49,7 @@ export default {
     window.onresize = null;
   },
   mounted() {
+    // new window.VConsole();
     let audio
     audio = new Audio();
     audio.src = (process.env.ENV_ == 1 ? '' : '/blog') + `/say.wav`
@@ -69,8 +70,9 @@ export default {
     }
     function initschedule(p) {
       const percentDiv = document.getElementById("per");// 获取进度条元素
-      percentDiv.style.width = p * 400 + "px";//进度条元素长度
-      percentDiv.style.textIndent = p * 400 + 5 + "px";//缩进元素中的首行文本
+      percentDiv.style.width = p * 100 + "%";//进度条元素长度
+      percentDiv.style.paddingLeft = p * 100 + "%";//缩进元素中的首行文本
+      percentDiv.style.textIndent = "5px";//缩进元素中的首行文本
       percentDiv.innerHTML = parseInt(p * 100) + "%";//进度百分比
     }
     function closeschedule() {
@@ -285,6 +287,10 @@ export default {
       percentFn_.add()
       percentFn_.tu()
     })
+    // materialEarth.map = new THREE.TextureLoader().load(`${this.publicPath}/end/bg1.jpeg`, (texture) => {
+    //   percentFn_.add()
+    //   percentFn_.tu()
+    // })
 
     const renderer = new THREE.WebGLRenderer({
       logarithmicDepthBuffer: true
@@ -445,17 +451,20 @@ export default {
   width: 100vw;
   height: 100vh;
   z-index: 999;
+  // display: none;
   background-color: #000;
 }
 
 #per-box {
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 400px;
+  max-width: 80%;
   height: 16px;
-  top: 50%;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -8px;
+  margin: auto auto;
   border-radius: 8px;
   border: 1px solid #009999;
   overflow: hidden;

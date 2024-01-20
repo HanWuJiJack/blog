@@ -86,6 +86,10 @@ module.exports = {
       //   src: "https://www.googletagmanager.com/gtag/js?id=G-N8464N6KV6",
       //   async: true,
       // },
+      // {
+      //   src: "https://unpkg.com/vconsole/dist/vconsole.min.js",
+      //   async: true,
+      // },
     ]
   },
 
