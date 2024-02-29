@@ -5,19 +5,33 @@
 </template>
 <script>
 import { getBlogInfo } from "@/api/service"
+import { getBlogInfoNode } from "@/api/serviceNode"
 export default {
   watchQuery: true,
+  fetchOnServer: false,
   layout: 'nor',
-  async asyncData({ params, error, payload, store }) {
+  async asyncData({ params, error, payload, store, $axios, isServer }) {
     if (payload) {
       return { html: payload.html, name: payload.name, }
     } else {
-      // const res = await getBlogInfo(params.id)
-      // return { html: res.data.html, name: res.data.name, }
-      const payload = store.state.article.list.find((item) => item.id == params.id)
-      return { html: payload.html, name: payload.name, }
+      console.log("process.server",process.server)
+      if (process.server) {
+        const res = await getBlogInfoNode(params.id)
+        return { html: res.data.html, name: res.data.name, }
+      } else {
+        const res = await getBlogInfo(params.id)
+        return { html: res.data.html, name: res.data.name, }
+      }
+      // const payload = store.state.article.list.find((item) => item.id == params.id)
+      // return { html: payload.html, name: payload.name, }
     }
   },
+  // async fetch({ params, error, payload, store }) {
+  //   const res = await getBlogInfo(params.id)
+  //   console.log(res)
+  //   this.html = res.data.html;
+  //   this.name = res.data.name
+  // },
   data() {
     return {
       html: ``,

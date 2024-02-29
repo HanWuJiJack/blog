@@ -4,9 +4,11 @@
 
 <script>
 import list from '../components/articleList'
+import { Loading } from 'element-ui';
 export default {
-  watchQuery: true,
+  watchQuery: ["pageNum", "pageSize"],
   name: 'index',
+  // fetchOnServer: false,
   components: {
     list
   },
@@ -39,7 +41,7 @@ export default {
     articleList() {
       return {
         list: this.$store.state.article.pageList,
-        total: this.$store.state.article.list.length,
+        total: this.$store.state.article.total,
       }
     },
   },

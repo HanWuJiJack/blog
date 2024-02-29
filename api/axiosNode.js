@@ -9,11 +9,9 @@ import errorCode from '@/utils/errorCode'
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
-  proxy: true, //官方示例需要，但是不加也没问题
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: "",
   // baseURL: 'http://192.168.10.135:3001',
-  // baseURL: 'http://127.0.0.1:3001',
+  baseURL: 'http://127.0.0.1:3001',
   // baseURL: 'http://s5.z100.vip:25258',
   // 超时
   timeout: 100000

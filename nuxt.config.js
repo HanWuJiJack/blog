@@ -7,7 +7,7 @@ module.exports = {
   mode: 'universal',
   // 这允许您指定 Nuxt.js 服务器实例的主机和端口。
   server: {
-    port: 8000, // default: 3000
+    port: 9014, // default: 3000
     host: '0.0.0.0' // default: localhost
   },
   /*
@@ -149,6 +149,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt',
     '@nuxtjs/sitemap',
@@ -206,8 +207,21 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    // @nuxtjs/axios模块中已内置了proxy支持，此处开启即可。
+    proxy: true, // 表示开启代理
+    // prefix: '/api', // 表示给请求url加个前缀 /api
+    // credentials: true // 表示跨域请求时是否需要使用凭证
   },
-
+  proxy: {
+    '/api': {
+      // target: 'http://s5.z100.vip:25258/',
+      target: 'http://127.0.0.1:3001/',
+      changeOrigin: true, // 表示是否跨域
+      pathRewrite: {
+        '^/api': '' // 删除url中的/api
+      }
+    }
+  },
   env: {
     NODE_ENV: process.env.ENV_
   },
@@ -328,6 +342,17 @@ module.exports = {
         })
       })
     },
+    // routes() {
+    //   return axios.get('http://s5.z100.vip:25258/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
+    //     // console.log(88888, res.data.data)
+    //     return res.data.data.list.map(blog => {
+    //       return {
+    //         route: '/article/' + blog.id,
+    //         payload: blog
+    //       }
+    //     })
+    //   })
+    // },
     // 默认情况下，运行nuxt generate将为每个路由创建一个目录并生成index.html文件。
     // subFolders: false
   },

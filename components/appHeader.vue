@@ -4,12 +4,12 @@
       <h2 class="logo"><router-link to="/" tag="a">hsueh</router-link></h2>
       <div class="nav_box transition-box" v-show="isShow">
         <el-form :inline="true">
-          <el-select v-model="searchval" filterable remote reserve-keyword :remote-method="remoteMethod"
-            :loading="loading" placeholder="请选择文章">
+          <el-select v-model="searchval" @change="searchHandle_" filterable remote reserve-keyword
+            :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
             <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
-          <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
+          <!-- <el-button @click="searchHandle_" icon="el-icon-search"></el-button> -->
         </el-form>
       </div>
     </nav>
@@ -21,12 +21,12 @@
       <el-collapse-transition>
         <div class="nav_box transition-box" v-show="isShow">
           <el-form :inline="true">
-            <el-select v-model="searchval" automatic-dropdown filterable remote reserve-keyword
+            <el-select v-model="searchval" @change="searchHandle_" automatic-dropdown filterable remote reserve-keyword
               :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
               <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
             </el-select>
-            <el-button @click="searchHandle_" icon="el-icon-search"></el-button>
+            <!-- <el-button @click="searchHandle_" icon="el-icon-search"></el-button> -->
           </el-form>
         </div>
       </el-collapse-transition>
@@ -37,6 +37,9 @@
 
 <script>
 // import * as htmlparser from 'htmlparser2'
+import {
+  getBlogList
+} from '../api/service'
 export default {
   name: 'navBar',
   data() {
@@ -54,13 +57,20 @@ export default {
     remoteMethod(query) {
       if (query !== '') {
         this.loading = true;
-        setTimeout(() => {
+        getBlogList({
+          pageNum: 1,
+          pageSize: 9999, name: query
+        }).then(res => {
+          this.options = res.data.list
           this.loading = false;
-          this.options = this.$store.state.article.list.filter(item => {
-            return item.name
-              .indexOf(query) > -1;
-          });
-        }, 200);
+        })
+        // setTimeout(() => {
+        //   this.loading = false;
+        //   this.options = this.$store.state.article.list.filter(item => {
+        //     return item.name
+        //       .indexOf(query) > -1;
+        //   });
+        // }, 200);
       } else {
         this.options = [];
       }
@@ -99,6 +109,7 @@ export default {
       })
     },
     searchHandle_(e) {
+      console.log(this.searchval)
       if (this.searchval) {
         this.go(`/article/${this.searchval}`)
         return false
