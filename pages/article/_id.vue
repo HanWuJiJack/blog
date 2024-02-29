@@ -75,6 +75,11 @@ export default {
   max-width: 1200px;
   width: 100%;
 
+  img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
   table {
     border-collapse: collapse;
   }
@@ -97,10 +102,6 @@ export default {
 
   input[type="checkbox"] {
     margin-right: 5px;
-  }
-
-  img {
-    width: 100%;
   }
 }
 </style>
