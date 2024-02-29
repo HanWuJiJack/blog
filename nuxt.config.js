@@ -72,7 +72,7 @@ module.exports = {
       {
         hid: 'og:url',
         name: 'og:url',
-        content: 'https://hanwujijack.github.io/blog/'
+        content: 'http://s5.z100.vip:3680/blog/'
       }
 
     ],
@@ -188,7 +188,7 @@ module.exports = {
     }
   },
   sitemap: {
-    hostname: 'https://hanwujijack.github.io/blog/', // 你的具体的网址
+    hostname: 'http://s5.z100.vip:3680/blog/', // 你的具体的网址
     gzip: true,
     defaults: {
       changefreq: 'daily',

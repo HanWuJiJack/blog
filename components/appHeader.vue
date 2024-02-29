@@ -4,33 +4,25 @@
       <h2 class="logo"><router-link to="/" tag="a">hsueh</router-link></h2>
       <div class="nav_box transition-box" v-show="isShow">
         <el-form :inline="true">
-          <el-select v-model="searchval" @change="searchHandle_" filterable remote reserve-keyword
+          <el-select v-model="searchId" @change="searchHandle_" filterable remote reserve-keyword
             :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
             <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
-          <!-- <el-button @click="searchHandle_" icon="el-icon-search"></el-button> -->
         </el-form>
       </div>
     </nav>
     <nav class="nav_wrap clearfix" v-else>
       <h1 class="logo"><router-link to="/" tag="a">hsueh</router-link></h1>
       <div class="menu_icon">
-        <i @click="showMenu($event)" class="el-icon-menu"></i>
+        <i @click.prevent="showMenu($event)" class="el-icon-menu"></i>
       </div>
-      <el-collapse-transition>
-        <div class="nav_box transition-box" v-show="isShow">
-          <el-form :inline="true">
-            <el-select v-model="searchval" @change="searchHandle_" automatic-dropdown filterable remote reserve-keyword
-              :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
-              <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </el-select>
-            <!-- <el-button @click="searchHandle_" icon="el-icon-search"></el-button> -->
-          </el-form>
-        </div>
-      </el-collapse-transition>
-
+      <div class="nav_box transition-box" v-show="isShow">
+        <el-form label-width="0px">
+          <el-autocomplete style="width: 90%;" v-model="searchName" :fetch-suggestions="remoteMethodAsync"
+            placeholder="请输入内容" @select="handleSelect"></el-autocomplete>
+        </el-form>
+      </div>
     </nav>
   </header>
 </template>
@@ -46,7 +38,8 @@ export default {
     return {
       isShow: false,
       isMobile: false,
-      searchval: '',
+      searchId: "",
+      searchName: "",
       isFocus: false,
       loading: false,
       options: [],
@@ -54,25 +47,28 @@ export default {
   },
   watch: {},
   methods: {
-    remoteMethod(query) {
+    handleSelect(item) {
+      this.isShow = !this.isShow
+      this.searchId = item.id
+      this.go(`/article/${item.id}`)
+    },
+    remoteMethodAsync(query, cb) {
       if (query !== '') {
         this.loading = true;
         getBlogList({
           pageNum: 1,
           pageSize: 9999, name: query
         }).then(res => {
-          this.options = res.data.list
           this.loading = false;
+          this.options = res.data.list.map(item => {
+            item.value = item.name;
+            return item
+          })
+          cb(this.options)
         })
-        // setTimeout(() => {
-        //   this.loading = false;
-        //   this.options = this.$store.state.article.list.filter(item => {
-        //     return item.name
-        //       .indexOf(query) > -1;
-        //   });
-        // }, 200);
       } else {
         this.options = [];
+        cb(this.options)
       }
     },
     //下拉菜单点击事件
@@ -108,10 +104,30 @@ export default {
         })
       })
     },
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        getBlogList({
+          pageNum: 1,
+          pageSize: 9999, name: query
+        }).then(res => {
+          this.options = res.data.list
+          this.loading = false;
+        })
+      } else {
+        this.options = [];
+      }
+    },
     searchHandle_(e) {
-      console.log(this.searchval)
-      if (this.searchval) {
-        this.go(`/article/${this.searchval}`)
+      if (this.searchId) {
+        let current = this.options.find(item => {
+          return item.id === this.searchId
+        })
+        if (current) {
+          this.searchName = current.name
+        }
+        // this.searchName
+        this.go(`/article/${this.searchId}`)
         return false
       } else {
         this.msgInfo("请先选择~")
@@ -128,12 +144,6 @@ export default {
     } else {
       this.isShow = true
       this.isMobile = false
-    }
-    document.onclick = function () {
-      if (_this.isMobile && !_this.isFocus) {
-        _this.isShow = false
-      }
-
     }
     window.addEventListener('resize', function () {
       if (document.body.clientWidth < 865) {
@@ -238,6 +248,7 @@ export default {
       float: right;
       font-size: 26px;
       padding-right: 20px;
+      // border: 1px solid red;
     }
 
     .logo {

@@ -14,7 +14,7 @@ export default {
     if (payload) {
       return { html: payload.html, name: payload.name, }
     } else {
-      console.log("process.server",process.server)
+      // console.log("process.server",process.server)
       if (process.server) {
         const res = await getBlogInfoNode(params.id)
         return { html: res.data.html, name: res.data.name, }
