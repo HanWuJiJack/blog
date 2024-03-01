@@ -28,6 +28,23 @@
         </div>
       </div>
     </section>
+
+    <!--    工具-->
+    <section class="module-css">
+      <div class="module-title">工具</div>
+      <div class="module-item-wrap contact-me">
+        <div class="contact-method clearfix">
+          <div class="contact-detail">
+            <router-link to="/regulex" tag="a">正则表达式</router-link>
+          </div>
+        </div>
+        <div class="contact-method clearfix">
+          <div class="contact-detail">
+            <router-link to="/keyboard" tag="a">键盘检测</router-link>
+          </div>
+        </div>
+      </div>
+    </section>
   </aside>
 </template>
 
@@ -212,4 +229,5 @@ export default {
       top: 70px;
     }
   }
-}</style>
+}
+</style>

@@ -21,12 +21,12 @@ marked.setOptions({
   }
 });
 
-export function mdRender(val){
+export function mdRender(val) {
   const replacer = (match) => emoji.emojify(match)
   return marked(val.replace(/(:.*:)/g, replacer)).replace(/<a/g, '<a target="_blank"')
 }
 
-export function timestampToTime (timestamp) {
+export function timestampToTime(timestamp) {
   let date = new Date(parseInt(timestamp))// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
   let Y = date.getFullYear() + '-'
   let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
@@ -35,4 +35,25 @@ export function timestampToTime (timestamp) {
   let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':'
   let s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds())
   return Y + M + D + h + m + s
+}
+
+export function throttle(fn, wait) {
+  let inThrottle, lastFn, lastTime;
+  const context = this
+  return function () {
+    const args = arguments;
+    if (!inThrottle) {
+      fn.apply(context, args);
+      lastTime = Date.now();
+      inThrottle = true;
+    } else {
+      clearTimeout(lastFn);
+      lastFn = setTimeout(function () {
+        if (Date.now() - lastTime >= wait) {
+          fn.apply(context, args);
+          lastTime = Date.now();
+        }
+      }, Math.max(wait - (Date.now() - lastTime), 0));
+    }
+  };
 }
