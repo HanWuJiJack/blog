@@ -139,6 +139,7 @@ module.exports = {
       src: "@/plugins/prism",
       ssr: false
     },
+    { src: '@/plugins/vue-cropper', ssr: false }
   ],
   // buildModules: [
   //   '@nuxt/typescript-build',
@@ -220,7 +221,15 @@ module.exports = {
       pathRewrite: {
         '^/api': '' // 删除url中的/api
       }
-    }
+    },
+    '/ai': {
+      // target: 'http://s5.z100.vip:25258/',
+      target: 'http://127.0.0.1:9017/',
+      changeOrigin: true, // 表示是否跨域
+      pathRewrite: {
+        '^/ai': '' // 删除url中的/api
+      }
+    },
   },
   env: {
     NODE_ENV: process.env.ENV_
@@ -241,7 +250,7 @@ module.exports = {
    */
   build: {
     // 防止多次打包
-    vendor: ["axios", 'three'],
+    vendor: ["axios", 'three', 'vue-cropper'],
     publicPath: "/static/",
     transpile: [/^element-ui/, 'three'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。

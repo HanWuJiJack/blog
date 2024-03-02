@@ -42,6 +42,7 @@
     "three": "^0.160.0",
     "viewerjs": "^1.6.1",
     "vue": "^2.7.10",
+    "vue-cropper": "^0.6.4",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
     "vue2-editor": "^2.10.3"

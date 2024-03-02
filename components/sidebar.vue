@@ -43,6 +43,11 @@
             <router-link to="/keyboard" tag="a">键盘检测</router-link>
           </div>
         </div>
+        <div class="contact-method clearfix">
+          <div class="contact-detail">
+            <router-link to="/ai" tag="a">一键抠图</router-link>
+          </div>
+        </div>
       </div>
     </section>
   </aside>

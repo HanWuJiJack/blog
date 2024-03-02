@@ -237,7 +237,16 @@ export default {
   layout: 'nor',
   head() {
     return {
-
+      title: 'keyboard',
+      meta: [{
+        charset: 'utf-8'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'hsueh的keyboard'
+      },
+      ],
     }
   },
   data() {

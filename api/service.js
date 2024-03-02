@@ -1,4 +1,5 @@
 import request from "./axios";
+import requestUpload from "@/utils/requestUpload";
 import requestNode from "./axiosNode";
 
 // 获取博客
@@ -95,5 +96,17 @@ export function del(id) {
   return request({
     url: '/api/comprehensive/contract/' + id,
     method: 'delete'
+  })
+}
+
+// ai抠图
+
+// name
+// 1：人像
+// 2：通用
+export function uploadAIImage(name) {
+  return requestUpload({
+    url: '/ai/test/' + name,
+    method: 'post'
   })
 }
