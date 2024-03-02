@@ -173,6 +173,10 @@ export default {
       // console.log(file)
     },
     inputClick() {
+      // console.dir(this.$refs.fileId)
+      // 先执行事件的代码块，然后将对象本身的value值清空
+      this.$refs.fileId.value = "";    // 写法1
+      //  e.target.value = "";    // 写法2
       this.$refs.fileId.click();
     },
     previewFile(file) {
@@ -289,7 +293,7 @@ export default {
 
     .box {
       margin-top: 20px;
-      // width: 500px;
+      max-width: 500px;
       border-radius: 10px;
       padding: 20px;
       box-sizing: border-box;
@@ -387,7 +391,7 @@ export default {
 
     .box {
       margin-top: 20px;
-      // width: 500px;
+      max-width: 500px;
       border-radius: 10px;
       padding: 20px;
       box-sizing: border-box;
