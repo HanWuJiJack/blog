@@ -139,7 +139,8 @@ module.exports = {
       src: "@/plugins/prism",
       ssr: false
     },
-    { src: '@/plugins/vue-cropper', ssr: false }
+    { src: '@/plugins/vue-cropper', ssr: false },
+
   ],
   // buildModules: [
   //   '@nuxt/typescript-build',
@@ -252,7 +253,7 @@ module.exports = {
     // 防止多次打包
     vendor: ["axios", 'three', 'vue-cropper'],
     publicPath: "/static/",
-    transpile: [/^element-ui/, 'three'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
+    transpile: [/^element-ui/, 'three','v-viewer'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
     extractCSS: {
       allChunks: true

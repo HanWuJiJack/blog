@@ -1,18 +1,24 @@
 <template>
   <div class="ai">
-    <label>
+    <div class="cropperbox">
+      <h3 class="text">操作说明：</h3>
+      <p class="text">1.点击选取文件</p>
+      <p class="text">2.点击截取图片</p>
+      <p class="text">3.点击导出</p>
+    </div>
+    <label class="cropperbox">
       <input type="file" name="file" ref="fileId" @change="submitForm" class="el-upload__input" />
       <!-- 上传按钮 -->
       <el-button size="mini" @click="inputClick">选取文件</el-button>
     </label>
     <div class="imgbox">
-      <div class="box">
+      <div class="box" v-if="ourl">
         <div>原图</div>
-        <img v-if="ourl" :src="ourl" alt="原图">
+        <img :src="ourl" alt="原图">
       </div>
-      <div class="box">
+      <div class="box" v-if="url">
         <div>处理后</div>
-        <img v-if="url" :src="url" alt="处理后">
+        <img :src="url" alt="处理后">
       </div>
     </div>
     <div class="cropperbox" v-if="url">
@@ -47,7 +53,7 @@
     </div>
     <div class="cropperbox">
       <div>
-        <el-button size="mini" @click="exportImg">导出</el-button>
+        <el-button v-if="cropperurl" size="mini" @click="exportImg">导出</el-button>
         <el-button size="mini" @click="reset">重置</el-button>
       </div>
     </div>
@@ -225,7 +231,7 @@ export default {
         if (!this.handleBeforeUpload(this.$refs.fileId.files[0])) {
           return;
         }
-        this.loading("loading", 1);
+        this.loading("AI抠图中...", 1);
         this.fileData = this.$refs.fileId.files[0];
         this.previewFile(this.fileData)
         this.upload();
@@ -276,7 +282,8 @@ export default {
   }
 }
 </script>
-<style  lang="scss">
+
+<style lang="scss">
 .ai {
   position: relative;
   margin: 0 auto;
@@ -290,6 +297,10 @@ export default {
 
   .cropperbox {
     margin-top: 20px;
+
+    .text {
+      color: #fff;
+    }
 
     .box {
       margin-top: 20px;
