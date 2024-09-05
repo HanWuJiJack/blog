@@ -45,12 +45,17 @@
         </div>
         <div class="contact-method clearfix">
           <div class="contact-detail">
-            <router-link to="/ai" tag="a">证件照</router-link>
+            <router-link to="/official-seal" tag="a">公章</router-link>
           </div>
         </div>
+        <!-- <div class="contact-method clearfix">
+          <div class="contact-detail">
+            <router-link to="/ai" tag="a">证件照</router-link>
+          </div>
+        </div> -->
         <div class="contact-method clearfix">
           <div class="contact-detail">
-            <router-link to="/replacement" tag="a">证件照换装</router-link>
+            <router-link to="/replacement" tag="a">合成图片</router-link>
           </div>
         </div>
       </div>

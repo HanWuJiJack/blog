@@ -46,7 +46,7 @@
         <el-button type="primary" @click="finish">确认</el-button>
       </div>
     </el-dialog>
-    <div class="cropperbox">
+    <!-- <div class="cropperbox">
       <div>
         <el-button size="mini" @click="changeColor('#f44336')">红底</el-button>
         <el-button size="mini" @click="changeColor('#2196f3')">蓝底</el-button>
@@ -61,7 +61,7 @@
         <div>截图后</div>
         <img :src="cropperurl" ref="cropperImg" alt="处理后">
       </div>
-    </div>
+    </div> -->
     <div style="margin-top: 20px;">
       <label>
         <el-button size="mini" @click="openMerge">合成图片</el-button>
@@ -108,6 +108,7 @@
 import vueCropper from '../components/vueCropper.vue'
 import html2canvas from 'html2canvas'
 import one from "../assets/merge/1.png";
+import two from "../assets/merge/2.png";
 export default {
   name: 'replacement',
   layout: 'nor',
@@ -116,6 +117,7 @@ export default {
       upimg: '',
       imgs: [
         { url: one },
+        { url: two },
       ],
       color: '#2196f3',
       dialogVisible: false,
