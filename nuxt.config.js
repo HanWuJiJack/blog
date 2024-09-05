@@ -76,11 +76,20 @@ module.exports = {
       }
 
     ],
-    link: [{
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/blog/favicon.ico'
-    },],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/blog/favicon.ico'
+      },
+      { rel: 'preload', type: 'image/png', href: "/blog/end/1.png" },
+      { rel: 'preload', type: 'image/png', href: "/blog/end/5.png" },
+      { rel: 'preload', type: 'image/png', href: "/blog/end/8.png" },
+      { rel: 'preload', type: 'image/png', href: "/blog/end/9.png" },
+      { rel: 'preload', type: 'image/png', href: "/blog/end/bg1.png" },
+      { rel: 'preload', type: 'image/jpeg', href: "/blog/end/earth.jpeg" },
+      { rel: 'preload', type: 'audio/wav', href: "/blog/say.wav" },
+    ],
     script: [
       // Google Analytics Code
       // {
@@ -253,7 +262,7 @@ module.exports = {
     // 防止多次打包
     vendor: ["axios", 'three', 'vue-cropper'],
     publicPath: "/static/",
-    transpile: [/^element-ui/, 'three','v-viewer'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
+    transpile: [/^element-ui/, 'three', 'v-viewer'], //我们终于知道这个选项是当使用有 es6 的库时，需要将其导出，告诉 babel 做转化的意思。
     analyze: true, //Nuxt.js 使用 webpack-bundle-analyzer 分析并可视化构建后的打包文件，你可以基于分析结果来决定如何优化它。
     extractCSS: {
       allChunks: true

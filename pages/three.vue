@@ -24,15 +24,26 @@ export default {
   head() {
     return {
       title: '3D',
-      meta: [{
-        charset: 'utf-8'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'hsueh的3D'
-      },
+      meta: [
+        {
+          charset: 'utf-8'
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'hsueh的3D'
+        },
       ],
+      metaInfo: {
+        link: [
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/1.png" },
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/5.png" },
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/8.png" },
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/9.png" },
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/bg1.png" },
+          { rel: 'preload', href: (process.env.ENV_ == 1 ? '' : '/blog') + "/end/earth.jpeg" },
+        ]
+      }
     }
   },
   data() {
