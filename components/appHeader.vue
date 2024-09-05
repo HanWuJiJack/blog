@@ -2,7 +2,7 @@
   <header class="app-header">
     <nav class="nav_wrap clearfix" v-if="!isMobile">
       <h2 class="logo"><router-link to="/" tag="a">hsueh</router-link></h2>
-      <div class="nav_box transition-box" v-show="isShow">
+      <!-- <div class="nav_box transition-box" v-show="isShow">
         <el-form :inline="true">
           <el-select v-model="searchId" @change="searchHandle_" filterable remote reserve-keyword
             :remote-method="remoteMethod" :loading="loading" placeholder="请选择文章">
@@ -10,11 +10,11 @@
             </el-option>
           </el-select>
         </el-form>
-      </div>
+      </div> -->
     </nav>
     <nav class="nav_wrap clearfix" v-else>
       <h1 class="logo"><router-link to="/" tag="a">hsueh</router-link></h1>
-      <div class="menu_icon">
+      <!-- <div class="menu_icon">
         <i @click.prevent="showMenu($event)" class="el-icon-menu"></i>
       </div>
       <div class="nav_box transition-box" v-show="isShow">
@@ -22,7 +22,7 @@
           <el-autocomplete style="width: 90%;" v-model="searchName" :fetch-suggestions="remoteMethodAsync"
             placeholder="请输入内容" @select="handleSelect"></el-autocomplete>
         </el-form>
-      </div>
+      </div> -->
     </nav>
   </header>
 </template>

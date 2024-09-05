@@ -29,10 +29,12 @@ export const actions = {
     } = ctx
     try {
       let res
+      console.log("process.server",process.server)
       if (process.server) {
         res = await getBlogListNode({
           pageNum: Number(query.pageNum) || 1,
-          pageSize: Number(query.pageSize) || 10
+          // pageSize: Number(query.pageSize) || 10
+          pageSize: 9999
         })
       } else {
         let load = Loading.service({
@@ -42,7 +44,8 @@ export const actions = {
         });
         res = await getBlogList({
           pageNum: Number(query.pageNum) || 1,
-          pageSize: Number(query.pageSize) || 10
+          // pageSize: Number(query.pageSize) || 10
+          pageSize: 9999
         })
         load.close()
       }

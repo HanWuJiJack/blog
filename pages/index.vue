@@ -8,7 +8,6 @@ import { Loading } from 'element-ui';
 export default {
   watchQuery: ["pageNum", "pageSize"],
   name: 'index',
-  // fetchOnServer: false,
   components: {
     list
   },

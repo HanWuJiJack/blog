@@ -5,9 +5,9 @@
         <h3 class="article-title">{{ item.name }}</h3>
       </router-link>
     </section>
-    <el-pagination style="text-align: center;margin-top: 15px;" v-if="articleList.total > 0" @current-change="getMoreArt"
+    <!-- <el-pagination style="text-align: center;margin-top: 15px;" v-if="articleList.total > 0" @current-change="getMoreArt"
       :current-page="pageNum" :page-size="pageSize" layout="prev, pager, next" :total="articleList.total">
-    </el-pagination>
+    </el-pagination> -->
     <section v-else class="no-content">
       <p>不好意思，暂无内容</p>
     </section>

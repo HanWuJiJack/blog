@@ -333,7 +333,6 @@ module.exports = {
   },
   generate: {
     dir: 'blog',
-    // routes: ['/article/1', '/article/2', '/article/3']
     // routes() {
     //   return axios.get('http://localhost:3001/custom/faas/list/openblog?pageNum=1&pageSize=9999').then(res => {
     //     return res.data.data.list.map(blog => {
