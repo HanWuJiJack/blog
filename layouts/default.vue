@@ -1,10 +1,13 @@
 <template>
   <div class="layout_css">
-    <AppHeader></AppHeader>
-    <transition>
-      <AppMain></AppMain>
-    </transition>
-    <AppFooter></AppFooter>
+    <canvas id="canvas"></canvas>
+    <div class="layout_main">
+      <AppHeader></AppHeader>
+      <transition>
+        <AppMain></AppMain>
+      </transition>
+      <AppFooter></AppFooter>
+    </div>
   </div>
 </template>
 <script>
@@ -15,33 +18,163 @@ export default {
   components: {
     AppHeader, AppMain, AppFooter
   },
+  mounted() {
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function getDistance(p1, p2) {
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    let pointArr = [];
+    let canvasWidth = window.innerWidth;
+    let canvasHeight = window.innerHeight;
+
+    // 初始化小球及其速度
+    function initPoints() {
+      pointArr = new Array(80).fill(1).map(() => {
+        return {
+          x: getRandomInt(0, canvasWidth),
+          y: getRandomInt(0, canvasHeight),
+          vx: getRandomInt(-2, 2) || getRandomInt(-2, 2),  // X 方向速度
+          vy: getRandomInt(-2, 2) || getRandomInt(-2, 2)  // Y 方向速度
+        };
+      });
+    }
+
+    // 绘制小球和连线
+    function drawPoints() {
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);  // 清除画布
+
+      pointArr.forEach((item, index) => {
+        // 绘制每个小球
+        ctx.beginPath();
+        ctx.arc(item.x, item.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+
+        // 连接线
+        let nowArr = pointArr.slice(index + 1);
+        nowArr.forEach(now => {
+          const length = getDistance(item, now);
+          ctx.beginPath();
+          ctx.moveTo(item.x, item.y);
+          ctx.lineTo(now.x, now.y);
+
+          if (length < 100) {
+            ctx.globalAlpha = 1;
+          } else if (length < 120) {
+            ctx.globalAlpha = 0.8;
+          } else if (length < 140) {
+            ctx.globalAlpha = 0.6;
+          } else if (length < 160) {
+            ctx.globalAlpha = 0.4;
+          } else if (length < 180) {
+            ctx.globalAlpha = 0.2;
+          } else {
+            ctx.globalAlpha = 0;
+          }
+
+          ctx.strokeStyle = "black";
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        });
+      });
+    }
+
+    // 更新小球位置
+    function updatePoints() {
+      pointArr.forEach(point => {
+        // 更新位置
+        point.x += point.vx;
+        point.y += point.vy;
+
+        // 碰到边界反弹
+        if (point.x < 0 || point.x > canvasWidth) point.vx *= -1;
+        if (point.y < 0 || point.y > canvasHeight) point.vy *= -1;
+      });
+    }
+
+    // 处理窗口大小变化
+    function handleResize() {
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+
+      // 更新 canvas 的宽高
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+
+      // 重新初始化小球位置
+      initPoints();
+    }
+
+    // 监听窗口大小变化事件
+    window.addEventListener("resize", handleResize);
+
+    // 动画循环
+    function animate() {
+      updatePoints();   // 更新小球位置
+      drawPoints();     // 绘制小球和线条
+      requestAnimationFrame(animate);  // 循环动画
+    }
+
+    // 初始设置画布大小和初始化小球
+    handleResize();
+    animate();  // 开始动画
+  }
 }
 </script>
 <style lang="scss" scoped>
 .layout_css {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   height: auto;
   min-height: 100%;
   padding-top: 60px;
   width: 100%;
   background-color: #f8fcff;
-
-  @media screen and (max-width: 920px) {
-    min-width: 320px;
+  position: relative;
+  
+  #canvas {
+    /* border: 1px solid #d3d3d3; */
+    /* background-color: #f1f1f1; */
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  .app-header {
-    height: 60px;
+  .layout_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+
+    @media screen and (max-width: 920px) {
+      min-width: 320px;
+    }
+
+    .app-header {
+      height: 60px;
+    }
+
+    .app-main {
+      flex: 1;
+    }
+
+    .app-footer {
+      height: 94px;
+    }
   }
 
-  .app-main {
-    flex: 1;
-  }
 
-  .app-footer {
-    height: 94px;
-  }
 }
 </style>
