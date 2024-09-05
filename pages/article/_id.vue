@@ -22,6 +22,7 @@ export default {
       //   const res = await getBlogInfo(params.id)
       //   return { html: res.data.html, name: res.data.name, }
       // }
+      console.log(store.state.article.list)
       const payload = store.state.article.list.find((item) => item.id == params.id)
       return { html: payload.html, name: payload.name, }
     }

@@ -1,7 +1,7 @@
 <template>
   <article class="articleList">
     <section v-if="articleList.total > 0" class="article-item" v-for="(item, index ) in articleList.list" :key="index">
-      <router-link :to="`/article/${item.id}`">
+      <router-link :to="`/article/${item.id}/`">
         <h3 class="article-title">{{ item.name }}</h3>
       </router-link>
     </section>

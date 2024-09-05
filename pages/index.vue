@@ -29,7 +29,7 @@ export default {
     return { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 }
   },
   fetch({ query, store }) {
-    store.dispatch('article/getPageArticleList', { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 })
+    // store.dispatch('article/getPageArticleList', { pageNum: Number(query.pageNum) || 1, pageSize: Number(query.pageSize) || 10 })
   },
   data() {
     return {
@@ -39,7 +39,8 @@ export default {
   computed: {
     articleList() {
       return {
-        list: this.$store.state.article.pageList,
+        // list: this.$store.state.article.pageList,
+        list: this.$store.state.article.list,
         total: this.$store.state.article.total,
       }
     },

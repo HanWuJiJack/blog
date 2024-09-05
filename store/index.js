@@ -49,7 +49,7 @@ export const actions = {
         })
         load.close()
       }
-      commit('article/SET_PAGE_LIST', res.data)
+      commit('article/SET_All_SUCCESS', res.data)
     } catch (error) {
       ctx.error({
         statusCode: 403,
