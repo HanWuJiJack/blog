@@ -33,17 +33,24 @@ export default {
     const ctx = canvas.getContext("2d");
 
     let pointArr = [];
+    let mouse = { x: null, y: null };  // 存储鼠标位置
     let canvasWidth = window.innerWidth;
     let canvasHeight = window.innerHeight;
 
     // 初始化小球及其速度
     function initPoints() {
-      pointArr = new Array(80).fill(1).map(() => {
+      pointArr = new Array(100).fill(1).map(() => {
+        let vx = getRandomInt(1, 10)
+        let vy = getRandomInt(1, 10)
+        let Bx = getRandomInt(1, 2) == 2 ? 1 : -1
+        let By = getRandomInt(1, 2) == 2 ? 1 : -1
         return {
           x: getRandomInt(0, canvasWidth),
           y: getRandomInt(0, canvasHeight),
-          vx: getRandomInt(-2, 2) || getRandomInt(-2, 2),  // X 方向速度
-          vy: getRandomInt(-2, 2) || getRandomInt(-2, 2)  // Y 方向速度
+          vx: vx / 10 * Bx,  // X 方向速度
+          vy: vy / 10 * By,  // Y 方向速度
+          ovx: vx / 10 * Bx,  // X 方向速度
+          ovy: vy / 10 * By,  // Y 方向速度
         };
       });
     }
@@ -91,13 +98,40 @@ export default {
     // 更新小球位置
     function updatePoints() {
       pointArr.forEach(point => {
+        // 鼠标吸引力计算
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - point.x;
+          const dy = mouse.y - point.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          // 定义吸引力的范围和强度
+          const maxDistance = 100;
+          const attractionStrength = 0.05;
+
+          if (distance < maxDistance) {
+            // 计算吸引力 (距离越近，吸引力越大)
+            const force = (1 - distance / maxDistance) * attractionStrength;
+            point.vx = dx * force;
+            point.vy = dy * force;
+          } else {
+            point.vx = point.ovx;
+            point.vy = point.ovy;
+          }
+        }
+
         // 更新位置
         point.x += point.vx;
         point.y += point.vy;
 
         // 碰到边界反弹
-        if (point.x < 0 || point.x > canvasWidth) point.vx *= -1;
-        if (point.y < 0 || point.y > canvasHeight) point.vy *= -1;
+        if (point.x < 0 || point.x > canvasWidth) {
+          point.vx *= -1;
+          point.ovx = point.vx
+        }
+        if (point.y < 0 || point.y > canvasHeight) {
+          point.vy *= -1;
+          point.ovy = point.vy;
+        }
       });
     }
 
@@ -116,7 +150,11 @@ export default {
 
     // 监听窗口大小变化事件
     window.addEventListener("resize", handleResize);
-
+    // 监听鼠标移动事件，更新鼠标位置
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
     // 动画循环
     function animate() {
       updatePoints();   // 更新小球位置
@@ -134,11 +172,10 @@ export default {
 .layout_css {
   height: auto;
   min-height: 100%;
-  padding-top: 60px;
   width: 100%;
   background-color: #f8fcff;
-  position: relative;
-  
+  // position: relative;
+
   #canvas {
     /* border: 1px solid #d3d3d3; */
     /* background-color: #f1f1f1; */
@@ -157,7 +194,8 @@ export default {
     justify-content: center;
     position: relative;
     z-index: 2;
-
+    padding-top: 60px;
+    opacity: 0.8;
     @media screen and (max-width: 920px) {
       min-width: 320px;
     }
