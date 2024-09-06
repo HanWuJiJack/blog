@@ -63,7 +63,9 @@ export default {
         // 绘制每个小球
         ctx.beginPath();
         ctx.arc(item.x, item.y, 3, 0, 2 * Math.PI);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "lime";
+        ctx.shadowBlur = 10;  // 设置阴影模糊
+        ctx.shadowColor = "lime";  // 绿色阴影
         ctx.fill();
 
         // 连接线
@@ -87,8 +89,8 @@ export default {
           } else {
             ctx.globalAlpha = 0;
           }
-
-          ctx.strokeStyle = "black";
+          ctx.shadowBlur = 0;  // 设置阴影模糊
+          ctx.strokeStyle = "lime";
           ctx.stroke();
           ctx.globalAlpha = 1;
         });
@@ -184,6 +186,7 @@ export default {
     margin: 0px;
     padding: 0px;
     position: fixed;
+    background-color: #000;
     z-index: 1;
     pointer-events: none;
   }
@@ -195,7 +198,8 @@ export default {
     position: relative;
     z-index: 2;
     padding-top: 60px;
-    opacity: 0.8;
+    // opacity: 0.8;
+
     @media screen and (max-width: 920px) {
       min-width: 320px;
     }
