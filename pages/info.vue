@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <el-button @click="pdfDown_" class="exportButton">导出</el-button>
+    <el-button @click="pdfDown_" class="exportButton">生成pdf</el-button>
     <div class="pdf" ref="box">
       <div class="context">
         <div class="userInfo">
@@ -112,7 +112,7 @@
             为人真诚，谦虚好学，乐观开朗，能很好地处理人际关系，遇到问题不抱怨而是用行动去解决，有较强的责任心和团队合作精神；对自己要求严格，做事情讲究高质量。
           </p>
         </div>
-        <span class="box_title">
+        <!-- <span class="box_title">
           教育背景
         </span>
         <div class="box_head line">
@@ -124,14 +124,14 @@
           <span class="text_ box_head_title">2022.03-2024.07 </span>
           <span class="text_ box_head_title">阜阳师范大学</span>
           <span class="text_ box_head_title">本科</span>
-        </div>
+        </div> -->
         <span class="box_title">
           开源
         </span>
         <div class="line">
           <p class="text__" style="cursor: pointer">
             <a href="https://github.com/HanWuJiJack" target="_blank" rel="noopener noreferrer">
-              <span>github</span>&nbsp;&nbsp;
+              <span>https://github.com/HanWuJiJack</span>&nbsp;&nbsp;
               <img width="30" src="@/assets/images/GitHub.png" alt="" />
             </a>
           </p>

@@ -447,11 +447,46 @@ export default {
   left: 10px;
   z-index: 3;
   cursor: pointer;
-  border-radius: 5px;
-  padding: 5px 10px;
+  text-decoration: none;
+  /* 居中 */
+  font-size: 18px;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
+  width: 100px;
+  height: 30px;
   color: #fff;
-  font-size: 14px;
-  background-color: #00ffff;
+  line-height: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+.back::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: -5px;
+  bottom: -5px;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
+  // border-radius: 50px;
+  filter: blur(20px);
+  z-index: -1;
+}
+
+.back:hover::before {
+  animation: sun 8s infinite;
+}
+
+.back:hover {
+  animation: sun 8s infinite;
+}
+
+@keyframes sun {
+  100% {
+    background-position: -400% 0;
+  }
 }
 
 /* 进度条css样式 */
