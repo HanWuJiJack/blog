@@ -1,16 +1,5 @@
-https://juejin.cn/post/7039508283190673416
-
-### 报错Rule can only have one resource source (provided resource and test + include + exclude) in
-
-npm uninstall webpack
-
-npm install webpack@^4.0.0 --save-dev
-
-### TypeError: this.getOptions is not a function
-
-npm uninstall sass-loader
-
-npm install sass-loader@10
+node:18.20.4
+yarn
 
 
 当使用 nuxt 命令时，dev 会被强制设置成 true

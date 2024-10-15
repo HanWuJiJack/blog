@@ -37,8 +37,8 @@
     "node-emoji": "^1.10.0",
     "nuxt": "^2.15.8",
     "prismjs": "^1.29.0",
-    "sass": "^1.69.5",
-    "sass-loader": "^10.5.1",
+    "sass": "1.69.5",
+    "sass-loader": "10.5.1",
     "three": "^0.160.0",
     "viewerjs": "^1.6.1",
     "vue": "^2.7.10",
@@ -60,6 +60,6 @@
     "push-dir": "^0.4.1",
     "vue-jest": "^3.0.4",
     "vue-svgicon": "^3.2.4",
-    "webpack": "^4.47.0"
+    "webpack": "4.47.0"
   }
 }
