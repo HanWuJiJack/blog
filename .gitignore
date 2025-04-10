@@ -2,3 +2,4 @@ node_modules
 .nuxt
 dist
 blog
+package-lock.json
